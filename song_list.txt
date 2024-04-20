@@ -1,0 +1,37 @@
+[
+  {
+    "vibe": "lowkey main character",
+    "songs": [
+      {
+        "title": "Ribs",
+        "artist": "Lorde"
+      },
+      {
+        "title": "Sweater Weather",
+        "artist": "The Neighbourhood"
+      },
+      {
+        "title": "Teenage Dirtbag",
+        "artist": "Wheatus"
+      },
+      {
+        "title": "505",
+        "artist": "Arctic Monkeys"
+      },
+      {
+        "title": "SLOW DANCING IN THE DARK",
+        "artist": "Joji"
+      }
+    ],
+    "words": [
+      "comfy",
+      "cozy",
+      "casual",
+      "chill",
+      "laid-back",
+      "effortless",
+      "cool",
+      "timeless"
+    ]
+  }
+]

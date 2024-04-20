@@ -5,6 +5,8 @@ from pathlib import Path
 import hashlib
 from dotenv import load_dotenv
 import os
+import json
+from playlistmaker import make_playlist
 
 
 load_dotenv()
@@ -59,12 +61,24 @@ def upload_if_needed(pathname: str) -> list[str]:
 
 # Modify prompt and image path here
 prompt_parts = [
-  "input: What is the vibe of this image (in lowercase), and list 5 songs that match the vibe of this image. artists should repeat at most twice. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image.",
+  "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. artists should repeat at most twice. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key",
   *upload_if_needed("testimage.jpg"),
   "output: ",
 ]
 
-response = model.generate_content(prompt_parts)
-print(response.text)
+response = model.generate_content(prompt_parts).text
+
+json_obj = {"text": response}
+
+with open('song_list.txt', 'w') as file:
+    # Write the content to the file
+    file.write(response)
+
+#with open("generated_content.json", "w") as json_file:
+ # json.dump(json_obj, json_file, indent=4)
+#print(response)
+
+make_playlist("song_list.txt")
+
 for uploaded_file in uploaded_files:
   genai.delete_file(name=uploaded_file.name)
