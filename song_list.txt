@@ -1,7 +1,11 @@
 [
   {
-    "vibe": "lowkey main character",
+    "vibe": "cottagecore soft girl aesthetic",
     "songs": [
+      {
+        "title": "Strawberry Blond",
+        "artist": "Mitski"
+      },
       {
         "title": "Ribs",
         "artist": "Lorde"
@@ -11,27 +15,23 @@
         "artist": "The Neighbourhood"
       },
       {
-        "title": "Teenage Dirtbag",
-        "artist": "Wheatus"
+        "title": "Francis Forever",
+        "artist": "Mitski"
       },
       {
-        "title": "505",
-        "artist": "Arctic Monkeys"
-      },
-      {
-        "title": "SLOW DANCING IN THE DARK",
-        "artist": "Joji"
+        "title": "Buzzcut Season",
+        "artist": "Lorde"
       }
     ],
     "words": [
-      "comfy",
-      "cozy",
-      "casual",
-      "chill",
-      "laid-back",
-      "effortless",
-      "cool",
-      "timeless"
+      "ethereal",
+      "blissful",
+      "dreamy",
+      "nostalgia",
+      "nature",
+      "feminine",
+      "whimsical",
+      "youth"
     ]
   }
 ]
