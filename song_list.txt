@@ -1,37 +1,37 @@
 [
   {
-    "vibe": "litty party vibes with the bros",
+    "vibe": "lowkey main character",
     "songs": [
       {
-        "title": "Mo Bamba",
-        "artist": "Sheck Wes"
+        "title": "Ribs",
+        "artist": "Lorde"
       },
       {
-        "title": "goosebumps",
-        "artist": "Travis Scott"
+        "title": "Sweater Weather",
+        "artist": "The Neighbourhood"
       },
       {
-        "title": "INDUSTRY BABY",
-        "artist": "Lil Nas X"
+        "title": "Teenage Dirtbag",
+        "artist": "Wheatus"
       },
       {
-        "title": "Congratulations",
-        "artist": "Post Malone"
+        "title": "505",
+        "artist": "Arctic Monkeys"
       },
       {
-        "title": "Sunflower",
-        "artist": "Post Malone"
+        "title": "SLOW DANCING IN THE DARK",
+        "artist": "Joji"
       }
     ],
     "words": [
-      "fun",
-      "hype",
-      "party",
-      "friends",
-      "youth",
-      "energy",
-      "night",
-      "music"
+      "comfy",
+      "cozy",
+      "casual",
+      "chill",
+      "laid-back",
+      "effortless",
+      "cool",
+      "timeless"
     ]
   }
 ]

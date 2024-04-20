@@ -4,6 +4,7 @@ import hashlib
 from dotenv import load_dotenv
 import os
 import json
+from playlistmaker import make_playlist
 
 
 load_dotenv()
@@ -73,6 +74,9 @@ with open('song_list.txt', 'w') as file:
 
 #with open("generated_content.json", "w") as json_file:
  # json.dump(json_obj, json_file, indent=4)
-print(response)
+#print(response)
+
+make_playlist("song_list.txt")
+
 for uploaded_file in uploaded_files:
   genai.delete_file(name=uploaded_file.name)
