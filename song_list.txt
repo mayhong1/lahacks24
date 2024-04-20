@@ -1,0 +1,37 @@
+[
+  {
+    "vibe": "litty party vibes with the bros",
+    "songs": [
+      {
+        "title": "Mo Bamba",
+        "artist": "Sheck Wes"
+      },
+      {
+        "title": "goosebumps",
+        "artist": "Travis Scott"
+      },
+      {
+        "title": "INDUSTRY BABY",
+        "artist": "Lil Nas X"
+      },
+      {
+        "title": "Congratulations",
+        "artist": "Post Malone"
+      },
+      {
+        "title": "Sunflower",
+        "artist": "Post Malone"
+      }
+    ],
+    "words": [
+      "fun",
+      "hype",
+      "party",
+      "friends",
+      "youth",
+      "energy",
+      "night",
+      "music"
+    ]
+  }
+]
