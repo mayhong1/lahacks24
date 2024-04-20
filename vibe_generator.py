@@ -77,6 +77,7 @@ with open("generated_content.json", "w") as json_file:
  json.dump(json_obj, json_file, indent=4)
 print(response)
 
+print("Generating your playlist...")
 make_playlist("song_list.txt")
 
 for uploaded_file in uploaded_files:

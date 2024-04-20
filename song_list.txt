@@ -7,6 +7,10 @@
         "artist": "Kendrick Lamar"
       },
       {
+        "title": "INDUSTRY BABY",
+        "artist": "Lil Nas X"
+      },
+      {
         "title": "POWER",
         "artist": "Kanye West"
       },
@@ -17,21 +21,17 @@
       {
         "title": "DNA.",
         "artist": "Kendrick Lamar"
-      },
-      {
-        "title": "The Scotts",
-        "artist": "Travis Scott & Kid Cudi"
       }
     ],
     "words": [
       "powerful",
-      "energetic",
-      "playful",
-      "mischievous",
       "confident",
-      "silly",
+      "playful",
+      "energetic",
+      "chaotic",
       "fun",
-      "happy"
+      "childish",
+      "silly"
     ]
   }
 ]
