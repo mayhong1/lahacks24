@@ -3,3 +3,6 @@
 .web
 __pycache__/
 .venv/
+.env
+.cache
+generated_content.json
