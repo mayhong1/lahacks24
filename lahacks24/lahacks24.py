@@ -1,7 +1,7 @@
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 
 from rxconfig import config
-from download import download_user
+from vibe_generator import username_to_playlist
 
 import reflex as rx
 
@@ -14,7 +14,7 @@ class State(rx.State):
     def generate_playlist(self, form_data: dict):
         self.form_data = form_data
         print(form_data['prompt_text'])
-        download_user(form_data['prompt_text'])
+        username_to_playlist(form_data['prompt_text'])
 
 
 

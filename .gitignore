@@ -1,8 +1,9 @@
 *.db
 *.py[cod]
+.cache
+.env
+.venv/
 .web
 __pycache__/
-.venv/
-.env
-.cache
+song_list.txt
 generated_content.json

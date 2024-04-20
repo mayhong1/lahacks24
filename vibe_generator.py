@@ -7,13 +7,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 from download import download_user
 from playlistmaker import make_playlist
-from download import download_user
+from download import *
 
 load_dotenv()
 
-download_user(sys.argv[1])
-
-# Replace with your API key
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Set up the model
@@ -62,33 +59,33 @@ def upload_if_needed(pathname: str) -> list[str]:
 
 # Downloading the images
 
-# Modify prompt and image path here
-prompt_parts = [
-  "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key",
-  *upload_if_needed("lahackstest/1.jpg"),
-  "output: ",
-]
+def username_to_playlist(username):
 
-for filename in os.listdir(sys.argv[1]):
-  print(filename)
-  prompt_parts.append(*upload_if_needed(f"{sys.argv[1]}/{filename}"))
+  #Download images
+  get_era_posts(username)
 
-prompt_parts.append("")
-prompt_parts.append("output: ")
+  # Modify prompt and image path here
+  prompt_parts = [
+    "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key"
+    ]
 
-response = model.generate_content(prompt_parts).text
+  for filename in os.listdir(username):
+      prompt_parts.append(*upload_if_needed(f"{username}/{filename}"))
 
-json_obj = {"text": response}
+  prompt_parts.append("")
+  prompt_parts.append("output: ")
 
-with open('song_list.txt', 'w') as file:
+  response = model.generate_content(prompt_parts).text
+
+  json_obj = {"text": response}
+
+  with open('song_list.txt', 'w') as file:
     # Write the content to the file
     file.write(response)
 
-# with open("generated_content.json", "w") as json_file:
-#   json.dump(json_obj, json_file, indent=4)
-# print(response)
+  make_playlist("song_list.txt")
 
-make_playlist("song_list.txt")
-
-for uploaded_file in uploaded_files:
-  genai.delete_file(name=uploaded_file.name)
+  for uploaded_file in uploaded_files:
+    genai.delete_file(name=uploaded_file.name)
+  
+  print("Playlist generated")
