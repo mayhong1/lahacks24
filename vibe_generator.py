@@ -7,6 +7,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from download import download_user
 from playlistmaker import make_playlist
+from download import download_user
 
 load_dotenv()
 
@@ -59,10 +60,13 @@ def upload_if_needed(pathname: str) -> list[str]:
   uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
   return [uploaded_files[-1]]
 
+# Downloading the images
 
 # Modify prompt and image path here
 prompt_parts = [
-  "input: What is the vibe of these images (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of these images. artists should repeat at most twice. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of these images. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key"
+  "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key",
+  *upload_if_needed("lahackstest/1.jpg"),
+  "output: ",
 ]
 
 for filename in os.listdir(sys.argv[1]):
