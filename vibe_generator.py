@@ -58,7 +58,6 @@ def upload_if_needed(pathname: str) -> list[str]:
   uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
   return [uploaded_files[-1]]
 
-
 # Modify prompt and image path here
 prompt_parts = [
   "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. artists should repeat at most twice. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key",
@@ -74,9 +73,9 @@ with open('song_list.txt', 'w') as file:
     # Write the content to the file
     file.write(response)
 
-#with open("generated_content.json", "w") as json_file:
- # json.dump(json_obj, json_file, indent=4)
-#print(response)
+with open("generated_content.json", "w") as json_file:
+ json.dump(json_obj, json_file, indent=4)
+print(response)
 
 make_playlist("song_list.txt")
 

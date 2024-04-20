@@ -5,5 +5,4 @@ __pycache__/
 .venv/
 testimage.jpg
 .env
-
-test.py
+testimage.jpg

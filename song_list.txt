@@ -1,37 +1,37 @@
 [
   {
-    "vibe": "lowkey main character",
+    "vibe": "lowkey chaotic, but like, in a good way",
     "songs": [
       {
-        "title": "Ribs",
-        "artist": "Lorde"
+        "title": "HUMBLE.",
+        "artist": "Kendrick Lamar"
       },
       {
-        "title": "Sweater Weather",
-        "artist": "The Neighbourhood"
+        "title": "POWER",
+        "artist": "Kanye West"
       },
       {
-        "title": "Teenage Dirtbag",
-        "artist": "Wheatus"
+        "title": "Stronger",
+        "artist": "Kanye West"
       },
       {
-        "title": "505",
-        "artist": "Arctic Monkeys"
+        "title": "DNA.",
+        "artist": "Kendrick Lamar"
       },
       {
-        "title": "SLOW DANCING IN THE DARK",
-        "artist": "Joji"
+        "title": "The Scotts",
+        "artist": "Travis Scott & Kid Cudi"
       }
     ],
     "words": [
-      "comfy",
-      "cozy",
-      "casual",
-      "chill",
-      "laid-back",
-      "effortless",
-      "cool",
-      "timeless"
+      "powerful",
+      "energetic",
+      "playful",
+      "mischievous",
+      "confident",
+      "silly",
+      "fun",
+      "happy"
     ]
   }
 ]
