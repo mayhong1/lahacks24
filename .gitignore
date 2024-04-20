@@ -3,3 +3,7 @@
 .web
 __pycache__/
 .venv/
+testimage.jpg
+.env
+
+test.py
