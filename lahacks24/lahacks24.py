@@ -55,9 +55,10 @@ class State(rx.State):
         return rx.redirect("/")
     
     def to_eras(self):
-        if (playlist_loaded):
-            return rx.redirect("/eras_page")
-        return rx.redirect("/")
+        return rx.redirect("/eras_page")
+    
+    def to_logout(self):
+        return rx.redirect("/log_out")
 
 # Homepage
 @rx.page(route="/")
@@ -86,7 +87,8 @@ def index() -> rx.Component:
             # ),
             justify="center",  # Center the buttons horizontally,
             spacing="3",
-            width="100%"       # need width="100%" twice for this to work 
+            width="100%", #need width="100%" twice for this to work 
+            on_click=State.to_logout
         ), 
         width="100%"
     )
@@ -149,8 +151,8 @@ def index() -> rx.Component:
 @rx.page(route="/eras_page")
 def eras_page() -> rx.Component:
     return rx.box(
-        rx.heading("username's eras tour", size="7", align="center", style=dict(paddingBottom="2%", paddingTop="3%")),
-        rx.text("Your Life, Your Music: Our AI has scanned your Instagram to craft playlists that echo the eras of your life.", align="center", style=dict(paddingBottom="2%", paddingTop="0%")),
+        rx.heading(f"{State.username}'s eras tour", size="7", align="center", style=dict(paddingBottom="2%", paddingTop="3%")),
+        rx.text("your life, your music: our ai has scanned your instagram to craft playlists that echo the eras of your life.", align="center", style=dict(paddingBottom="2%", paddingTop="0%")),
         rx.grid(
             rx.box(
                 rx.heading(f"{State.data1[0]['vibe']} era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%", maxWidth="70%", margin="0 auto")),
@@ -161,7 +163,7 @@ def eras_page() -> rx.Component:
                     box_shadow="lg",
                     style=dict(margin="0 auto", paddingBottom="3%")
                 ),
-                rx.text(f"during this time of your life, you were {State.data1[0]['words'][0]}, {State.data1[0]['words'][1]}, {State.data1[0]['words'][2]}, {State.data1[0]['words'][3]}, {State.data1[0]['words'][4]}, {State.data1[0]['words'][5]}, {State.data1[0]['words'][6]}, and {State.data1[0]['words'][7]}", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
+                rx.text(f"your vibes: {State.data1[0]['words'][0]}, {State.data1[0]['words'][1]}, {State.data1[0]['words'][2]}, {State.data1[0]['words'][3]}, {State.data1[0]['words'][4]}, {State.data1[0]['words'][5]}, {State.data1[0]['words'][6]}, and {State.data1[0]['words'][7]}", style=dict(maxWidth="70%", margin="0 auto"), color="rgb(79, 83, 158)", align="center"),
                 rx.box(
                     rx.text("songs", align="center", weight="bold", style=dict(paddingTop="3%")),
                     rx.text(f"{State.data1[0]['songs'][0]['title']} - {State.data1[0]['songs'][0]['artist']}", align="center"),
@@ -180,7 +182,7 @@ def eras_page() -> rx.Component:
                     box_shadow="5g",
                     style=dict(margin="0 auto", paddingBottom="3%")
                 ),
-                rx.text(f"you seem {State.data2[0]['words'][0]}, {State.data2[0]['words'][1]}, {State.data2[0]['words'][2]}, {State.data2[0]['words'][3]}, {State.data2[0]['words'][4]}, {State.data2[0]['words'][5]}, {State.data2[0]['words'][6]}, and {State.data2[0]['words'][7]} during this era", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
+                rx.text(f"your vibes: {State.data2[0]['words'][0]}, {State.data2[0]['words'][1]}, {State.data2[0]['words'][2]}, {State.data2[0]['words'][3]}, {State.data2[0]['words'][4]}, {State.data2[0]['words'][5]}, {State.data2[0]['words'][6]}, and {State.data2[0]['words'][7]} ", color="rgb(79, 83, 158)", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
                 rx.box(
                     rx.text("songs", align="center", weight="bold", style=dict(paddingTop="3%")),
                     rx.text(f"{State.data2[0]['songs'][0]['title']} - {State.data2[0]['songs'][0]['artist']}", align="center"),
@@ -200,7 +202,7 @@ def eras_page() -> rx.Component:
                     style=dict(margin="0 auto", paddingBottom="3%")
                 ),
 
-                    rx.text(f"you're giving {State.data3[0]['words'][0]}, {State.data3[0]['words'][1]}, {State.data3[0]['words'][2]}, {State.data3[0]['words'][3]}, {State.data3[0]['words'][4]}, {State.data3[0]['words'][5]}, {State.data3[0]['words'][6]}, and {State.data3[0]['words'][7]}", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
+                    rx.text(f"your vibes: {State.data3[0]['words'][0]}, {State.data3[0]['words'][1]}, {State.data3[0]['words'][2]}, {State.data3[0]['words'][3]}, {State.data3[0]['words'][4]}, {State.data3[0]['words'][5]}, {State.data3[0]['words'][6]}, and {State.data3[0]['words'][7]}", color="rgb(79, 83, 158)", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
                     rx.box(
                     rx.text("songs", align="center", weight="bold", style=dict(paddingTop="3%")),
                     rx.text(f"{State.data3[0]['songs'][0]['title']} - {State.data3[0]['songs'][0]['artist']}", align="center"),
