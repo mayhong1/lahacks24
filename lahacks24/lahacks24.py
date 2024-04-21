@@ -19,7 +19,7 @@ load_dotenv()
 
 # Set up the MongoDB connection
 try:
-    client = MongoClient(os.getenv("MONGODB_URI"))
+    client = MongoClient(os.getenv("MONGO_URI"))
     db = client["retrotune"]
     users_collection = db["users"]
 except Exception as e:
@@ -323,4 +323,3 @@ app.add_page(index, route="/")
 app.add_page(eras_page)
 app.add_page(login_page, route="/login")
 app.add_page(signup_page, route="/signup")
-

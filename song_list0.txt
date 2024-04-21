@@ -1,0 +1,37 @@
+[
+  {
+    "vibe": "golden hour with bae, lowkey obsessed, main character",
+    "songs": [
+      {
+        "title": "Golden Hour",
+        "artist": "JVKE"
+      },
+      {
+        "title": "Until I Found You",
+        "artist": "Stephen Sanchez"
+      },
+      {
+        "title": "Dandelions",
+        "artist": "Ruth B."
+      },
+      {
+        "title": "Best Part",
+        "artist": "Daniel Caesar"
+      },
+      {
+        "title": "Can't Help Falling In Love",
+        "artist": "Elvis Presley"
+      }
+    ],
+    "words": [
+      "golden",
+      "love",
+      "couple",
+      "city",
+      "romantic",
+      "affectionate",
+      "warm",
+      "happy"
+    ]
+  }
+]

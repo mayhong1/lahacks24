@@ -8,6 +8,7 @@ import hashlib
 from pathlib import Path
 from dotenv import load_dotenv
 from playlistmaker import make_playlist
+from db import push_playlists_to_mongo
 from download import *
 
 # Load the .env file
@@ -122,6 +123,18 @@ def username_to_eras_playlist(username):
     make_playlist(file_name, pics_per_era[i][1])
 
     print(f"[{username}] Playlist created!")
+
+    # store jsons in mongo
+    with open("song_list0.txt", 'r') as file:
+        playlist_data1 = json.load(file)
+    with open("song_list1.txt", 'r') as file:
+        playlist_data2 = json.load(file)
+    with open("song_list2.txt", 'r') as file:
+        playlist_data3 = json.load(file)
+    
+    all_playlists_data = [playlist_data1, playlist_data2, playlist_data3]
+    push_playlists_to_mongo(username, all_playlists_data)
+
 
     # Remove the uploaded files from Gemini
     for uploaded_file in uploaded_files:
