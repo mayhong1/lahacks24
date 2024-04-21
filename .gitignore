@@ -7,3 +7,4 @@
 __pycache__/
 assets/*.jpg
 generated_content.json
+song_list.txt
