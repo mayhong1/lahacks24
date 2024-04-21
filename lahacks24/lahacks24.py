@@ -282,7 +282,7 @@ def login_page() -> rx.Component:
             width="25em"
         ),
         # Style the background of the center component
-        background="linear-gradient(120deg, #a6c0fe 0%, #f68084 100%)",
+        background="radial-gradient(circle, rgba(174,208,238,1) 0%, rgba(233,148,213,1) 100%)",
         # Set the full height of the viewport
         height="100vh",
         # Set the full width of the viewport
@@ -312,7 +312,7 @@ def signup_page() -> rx.Component:
             align="center",
             width="25em",
         ),
-        background="linear-gradient(120deg, #a6c0fe 0%, #f68084 100%)",
+        background="radial-gradient(circle, rgba(174,208,238,1) 0%, rgba(233,148,213,1) 100%)",
         height="100vh",
         width="100%",
     )
