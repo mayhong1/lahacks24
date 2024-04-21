@@ -55,7 +55,9 @@ class State(rx.State):
         return rx.redirect("/")
     
     def to_eras(self):
-        return rx.redirect("/eras_page")
+        if (playlist_loaded):
+            return rx.redirect("/eras_page")
+        return rx.redirect("/")
 
 # Homepage
 @rx.page(route="/")
@@ -63,12 +65,12 @@ def index() -> rx.Component:
 
     home_playlist_settings = rx.center(
         rx.hstack(
-            rx.button("Home", 
-                background_color=rx.color("pink", alpha=300),
-                borderRadius="39%",
-                size="4",
-                margin="30px 0"
-            ), 
+            # rx.button("Home", 
+            #     background_color=rx.color("pink", alpha=300),
+            #     borderRadius="39%",
+            #     size="4",
+            #     margin="30px 0"
+            # ), 
             rx.button("Playlist", 
                 background_color=rx.color("pink", alpha=300),
                 borderRadius="39%",
@@ -76,15 +78,15 @@ def index() -> rx.Component:
                 margin="30px 0",
                 on_click=State.to_eras
             ),
-            rx.button("Log Out", 
-                background_color=rx.color("pink", alpha=300),
-                borderRadius="39%",
-                size="4",
-                margin="30px 0"
-            ),
-            justify="center",  #Center the buttons horizontally,
+            # rx.button("Log Out", 
+            #     background_color=rx.color("pink", alpha=300),
+            #     borderRadius="39%",
+            #     size="4",
+            #     margin="30px 0"
+            # ),
+            justify="center",  # Center the buttons horizontally,
             spacing="3",
-            width="100%" #need width="100%" twice for this to work 
+            width="100%"       # need width="100%" twice for this to work 
         ), 
         width="100%"
     )
@@ -227,26 +229,26 @@ def eras_page() -> rx.Component:
         background="radial-gradient(circle, rgba(205,227,246,1) 1%, rgba(211,210,241,1) 25%, rgba(218,198,239,1) 45%, rgba(204,189,232,1) 61%, rgba(228,182,233,1) 80%, rgba(233,148,213,1) 100%)",
     )
 
-@rx.page(route="log_out")
-def log_out() -> rx.Component:
-    return rx.container(
-        rx.heading("You have been logged out", size="5", align="center", style={"paddingBottom": "3%", "paddingTop": "2%"}),
-        rx.text("Thank you for using RetroTune!", align="center", style={"paddingBottom": "2%"}),
-        rx.button(
-            "Log In Again",
-            on_click=lambda: rx.redirect("/login"),  # Assuming '/login' is your login route
-            style={"marginTop": "20px", "display": "block", "margin": "0 auto"}
-        ),
-        rx.button(
-            "Go to Home",
-            on_click=lambda: rx.redirect("/"),  # Assuming '/' is your home route
-            style={"marginTop": "10px", "display": "block", "margin": "0 auto"}
-        ),
-        style={"textAlign": "center", "padding": "50px"}
-    )
+# @rx.page(route="log_out")
+# def log_out() -> rx.Component:
+#     return rx.container(
+#         rx.heading("You have been logged out", size="5", align="center", style={"paddingBottom": "3%", "paddingTop": "2%"}),
+#         rx.text("Thank you for using RetroTune!", align="center", style={"paddingBottom": "2%"}),
+#         rx.button(
+#             "Log In Again",
+#             on_click=lambda: rx.redirect("/login"),  # Assuming '/login' is your login route
+#             style={"marginTop": "20px", "display": "block", "margin": "0 auto"}
+#         ),
+#         rx.button(
+#             "Go to Home",
+#             on_click=lambda: rx.redirect("/"),       # Assuming '/' is your home route
+#             style={"marginTop": "10px", "display": "block", "margin": "0 auto"}
+#         ),
+#         style={"textAlign": "center", "padding": "50px"}
+#     )
 
 # Initialize website
 app = rx.App()
 app.add_page(index)
 app.add_page(eras_page)
-app.add_page(log_out)
+# app.add_page(log_out)
