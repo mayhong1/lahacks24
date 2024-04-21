@@ -3,7 +3,6 @@ import os
 import datetime
 import sys
 
-# Returns the number of different eras
 def get_era_posts(username, private_user=False, password=""):
 
     # Removes any old images in assets/
@@ -41,7 +40,10 @@ def get_era_posts(username, private_user=False, password=""):
 
     print(f"[{username}] Posts loaded!")
 
-
+    # Decide which posts to download
+    # 
+    # If they have more than three posts, take the first, last, and median post
+    # (based on date). 
     download_posts = []
     if (len(posts) >= 3):
         dates = [post.date for post in posts]
@@ -60,6 +62,7 @@ def get_era_posts(username, private_user=False, password=""):
     else:
         download_posts = posts
 
+    # Check for carousel posts and take the first 3 images in any carousel post
     urls = []
     for post in download_posts:
         if (post.mediacount > 1):
@@ -77,6 +80,10 @@ def get_era_posts(username, private_user=False, password=""):
 
     print(f"[{username}] Downloading images...")
 
+    # Download the actual images
+    #   - Saved in the format <username>-era<1-3>[0-2]
+    #
+    # era_count is a list of tuples in the format: (number of slides, date post created)
     era_count = []
     for i in range(len(download_posts)):
         era_count.append((len(urls[i]), download_posts[i].date))
@@ -84,6 +91,9 @@ def get_era_posts(username, private_user=False, password=""):
             loader.download_pic(filename=f"assets/{username}-era{len(download_posts)-i}[{j}]", url=urls[i][j], mtime=download_posts[i].date)
             print(f"[{username}] Downloaded {username}-era{len(download_posts)-i}[{j}].jpg")
 
+    
+    # Currently era_count is saved era3 -> era1 (descending), but 
+    # vibe_generator.py reads in ascending order, so we reverse the list
     era_count = era_count[::-1]
 
     return era_count
