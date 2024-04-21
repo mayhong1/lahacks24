@@ -2,8 +2,11 @@ import instaloader, os, datetime, sys
 
 # Returns the number of different eras
 def get_era_posts(username, private_user=False, password=""):
+
+    # Removes any old images in assets/
     os.system("rm assets/*.jpg")
 
+    # Initalize Instaloader object
     loader = instaloader.Instaloader(
                 quiet=True,
                 download_pictures=True,
@@ -14,6 +17,7 @@ def get_era_posts(username, private_user=False, password=""):
                 post_metadata_txt_pattern=""
                 )
     
+    # Login if user is private
     if (private_user):
         print(f"[{username}] Logging in...")
     
@@ -21,20 +25,21 @@ def get_era_posts(username, private_user=False, password=""):
 
         print(f"[{username}] Logged in!")
 
+    # Load user profile
     profile = instaloader.Profile.from_username(loader.context, username)
-
-    posts = []
 
     print(f"[{username}] Loading posts...")
 
+    # Load user posts
+    posts = []
     for post in profile.get_posts():
         if (not post.is_video):
             posts.append(post)
 
     print(f"[{username}] Posts loaded!")
 
-    download_posts = []
 
+    download_posts = []
     if (len(posts) >= 3):
         dates = [post.date for post in posts]
         middle = dates[0] + (dates[len(dates)-1]-dates[0])/2

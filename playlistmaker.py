@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import datetime
 
+# Dictionary to convert from month numbers to string
 month_dict = {
     1  : "january",
     2  : "februrary",
@@ -20,29 +21,32 @@ month_dict = {
     12 : "december"
 }
 
+# Load the .env folder
 load_dotenv()
 
-# Load the JSON file
 def make_playlist(file_path, era_date:datetime):
 
+    # Load the JSON file
     f = open(file_path, "r")
     data = json.load(f)
     f.close()
 
     # Extract the songs from the JSON data
-    songs = data[0]['songs']
+    songs = data[0]["songs"]
 
     # Authenticate with Spotify
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.getenv("CLIENT_ID"),
                                                 client_secret=os.getenv("CLIENT_SECRET"),
-                                                redirect_uri='http://localhost:3000/callback',
-                                                scope='playlist-modify-private'))
+                                                redirect_uri="http://localhost:3000/callback",
+                                                scope="playlist-modify-private"))
 
     # Create a new playlist
-    playlist = sp.user_playlist_create(sp.me()['id'], f"{data[0]['vibe']} era", public=False)
-    playlist_id = playlist['id']
-    playlist_description = f'your {month_dict[era_date.month]} {era_date.year} vibes: '
-    words = data[0]['words']
+    playlist = sp.user_playlist_create(sp.me()["id"], f"{data[0]["vibe"]} era", public=False)
+    playlist_id = playlist["id"]
+
+    # Create playlist description 
+    playlist_description = f"your {month_dict[era_date.month]} {era_date.year} vibes: "
+    words = data[0]["words"]
 
     for i in range(len(words)-1):
         playlist_description = playlist_description + words[i] + ", "
@@ -53,10 +57,10 @@ def make_playlist(file_path, era_date:datetime):
     # Add songs to the playlist
     track_uris = []
     for song in songs:
-        title = song['title']
-        artist = song['artist']
-        results = sp.search(q='track:' + title + ' artist:' + artist, type='track')
-        if results['tracks']['items']:
-            track_uris.append(results['tracks']['items'][0]['uri'])
+        title = song["title"]
+        artist = song["artist"]
+        results = sp.search(q=f"track:{title} artist:{artist}", type="track")
+        if results["tracks"]["items"]:
+            track_uris.append(results["tracks"]["items"][0]["uri"])
 
-    sp.playlist_add_items(playlist['id'], track_uris)
+    sp.playlist_add_items(playlist["id"], track_uris)
