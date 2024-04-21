@@ -1,58 +1,49 @@
-import firebase_admin
-from firebase_admin import credentials, firestore
+from pymongo import MongoClient
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
-firebase_credentials_path = os.getenv("SERVICE_ACCOUNT_KEY_PATH")
+mongo_uri = os.getenv("MONGODB_URI")
 
-# Initialize Firebase Admin using a service account
-cred = credentials.Certificate(firebase_credentials_path)
-firebase_admin.initialize_app(cred)
-
-# Firestore database client
-db = firestore.client()
+# Connect to MongoDB
+client = MongoClient(mongo_uri)
+db = client.retrotune
 
 def add_user(email, username):
     # Function to add a user to the 'users' collection
-    user_data = {
+    user_doc = {
         "email": email,
         "username": username
     }
-    # Add user data to Firestore and return the document reference ID
-    user_ref = db.collection('users').add(user_data)
-    return user_ref[1].id
+    result = db.users.insert_one(user_doc)
+    return str(result.inserted_id)  # Return the ID of the inserted document
 
 def add_playlist(user_id, name, description, songs):
     # Function to add a playlist to the 'playlists' collection
-    playlist_data = {
+    playlist_doc = {
         "userId": user_id,
         "name": name,
         "description": description,
         "songs": songs
     }
-    playlist_ref = db.collection('playlists').add(playlist_data)
-    return playlist_ref[1].id
+    result = db.playlists.insert_one(playlist_doc)
+    return str(result.inserted_id)  # Return the ID of the inserted document
 
 def get_all_users():
     # Function to retrieve all users
-    users_ref = db.collection('users').stream()
-    users = {user.id: user.to_dict() for user in users_ref}
-    return users
+    users = list(db.users.find())
+    return users  # Return a list of user documents
 
 def get_all_playlists():
     # Function to retrieve all playlists
-    playlists_ref = db.collection('playlists').stream()
-    playlists = {playlist.id: playlist.to_dict() for playlist in playlists_ref}
-    return playlists
+    playlists = list(db.playlists.find())
+    return playlists  # Return a list of playlist documents
 
 
 #test
 
-# Add a user
+# Example usage
 user_id = add_user("jordan@caffeinated.org", "jordinho108")
-
-# Add a playlist for the user
 playlist_id = add_playlist(
     user_id,
     "lowkey chaotic",
@@ -63,14 +54,13 @@ playlist_id = add_playlist(
     ]
 )
 
-# Retrieve all users and playlists and print them
 users = get_all_users()
 playlists = get_all_playlists()
 
 print("Users:")
-for user_id, user_data in users.items():
-    print(user_id, user_data)
+for user in users:
+    print(user['_id'], user)
 
 print("\nPlaylists:")
-for playlist_id, playlist_data in playlists.items():
-    print(playlist_id, playlist_data)
+for playlist in playlists:
+    print(playlist['_id'], playlist)
