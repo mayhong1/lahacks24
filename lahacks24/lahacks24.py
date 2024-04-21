@@ -1,15 +1,9 @@
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
-
+import json
+import reflex as rx
 from rxconfig import config
 from vibe_generator import username_to_eras_playlist
-import json
 from typing import List, Dict
-import reflex as rx
 
-docs_url = "https://reflex.dev/docs/getting-started/introduction/"
-filename = f"{config.app_name}/{config.app_name}.py"
-
-#loading JSON files
 
 month_dict = {
     1  : "January",
@@ -25,9 +19,6 @@ month_dict = {
     11 : "November",
     12 : "December"
 }
-
-# setting up variables
-# title: d
 
 class State(rx.State):
     """The app state."""

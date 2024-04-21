@@ -1,9 +1,10 @@
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
-import json
-from dotenv import load_dotenv
 import os
 import datetime
+import spotipy
+import json
+from spotipy.oauth2 import SpotifyOAuth
+from dotenv import load_dotenv
+
 
 # Dictionary to convert from month numbers to string
 month_dict = {

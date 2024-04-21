@@ -1,6 +1,6 @@
+import numpy as np
 from wordcloud import WordCloud
 from PIL import Image
-import numpy as np
 
 # Sample text
 text = "hello hello world world python python python data data science word random hello daniel goldfish asdf asjlkj jasklfjlk asdjls asljkdf sajk"

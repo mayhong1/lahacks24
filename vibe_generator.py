@@ -1,8 +1,8 @@
-import google.generativeai as genai
 import os
 import json
 import sys
 import hashlib
+import google.generativeai as genai
 from pathlib import Path
 from dotenv import load_dotenv
 from playlistmaker import make_playlist

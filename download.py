@@ -1,4 +1,7 @@
-import instaloader, os, datetime, sys
+import instaloader
+import os
+import datetime
+import sys
 
 # Returns the number of different eras
 def get_era_posts(username, private_user=False, password=""):
