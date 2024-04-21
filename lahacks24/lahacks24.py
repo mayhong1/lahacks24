@@ -50,6 +50,9 @@ class State(rx.State):
 
         # Redirect to the eras page
         return rx.redirect("/eras_page")
+    
+    def back_to_index(self):
+        return rx.redirect("/")
 
 # Homepage
 @rx.page(route="/")
@@ -168,12 +171,12 @@ def eras_page() -> rx.Component:
         ),
         rx.center(
             rx.button(
-                "generate on spotify",
-                type="submit",
+                "back",
                 size="3",
                 marginTop="4%",
                 marginBottom="4%",
-                background="rgba(18, 11, 38, 0.8)"
+                background="rgba(18, 11, 38, 0.8)",
+                on_click=State.back_to_index
             )
         ),
         height="100%",
