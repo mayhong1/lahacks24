@@ -100,12 +100,13 @@ def eras_page() -> rx.Component:
 
     return rx.box(
         rx.box(
-            rx.heading(f"{State.username}'s eras tour", size="7", align="center", style=dict(paddingBottom="2%", paddingTop="3%")),
-            rx.text("using AI, we analyzed your instagram feed, discovered these eras of your life, and made playlists based off the vibe.", align="center", style=dict(paddingBottom="2%", paddingTop="0%")),
+            rx.heading(f"{State.username}'s eras tour", size="7", align="center", style=dict(paddingBottom="2%", paddingTop="2%", color="white")),
+            rx.text("using AI, we analyzed your instagram feed, discovered these eras of your life, and made playlists based off the vibe.", color="white", align="center", style=dict(paddingBottom="2%", paddingTop="0%")),
+            background="rgba(0, 0, 0, 0.8)"
         ),
         rx.grid(
             rx.box(
-                rx.heading(f"{data1[0]['vibe']} era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%", maxWidth="70%", margin="0 auto")),
+                rx.heading(f"{data1[0]['vibe']} era", size="6", color="rgb(45, 42, 54)", align="center", style=dict(paddingBottom="3%", paddingTop="5%", maxWidth="70%", margin="0 auto")),
                 rx.image(
                     src= f"/{State.username}-era1[0].jpg",
                     width="200px",
@@ -113,7 +114,7 @@ def eras_page() -> rx.Component:
                     box_shadow="lg",
                     style=dict(margin="0 auto", paddingBottom="3%")
                 ),
-                rx.text(f"during this time of your life, you were {data1[0]['words'][0]}, {data1[0]['words'][1]}, {data1[0]['words'][2]}, {data1[0]['words'][3]}, {data1[0]['words'][4]}, {data1[0]['words'][5]}, {data1[0]['words'][6]}, and {data1[0]['words'][7]}", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
+                rx.text(f"during this time of your life, you were {data1[0]['words'][0]}, {data1[0]['words'][1]}, {data1[0]['words'][2]}, {data1[0]['words'][3]}, {data1[0]['words'][4]}, {data1[0]['words'][5]}, {data1[0]['words'][6]}, and {data1[0]['words'][7]}", color="rgb(73, 67, 89)", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
                 rx.box(
                     rx.text("songs", align="center", weight="bold", style=dict(paddingTop="3%")),
                     rx.text(f"{data1[0]['songs'][0]['title']} - {data1[0]['songs'][0]['artist']}", align="center"),
@@ -124,7 +125,7 @@ def eras_page() -> rx.Component:
                 ),
             ),
             rx.box(
-                rx.heading(f"{data2[0]['vibe']} era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%", maxWidth="70%", margin="0 auto")),
+                rx.heading(f"{data2[0]['vibe']} era", size="6", color="rgb(45, 42, 54)", align="center", style=dict(paddingBottom="3%", paddingTop="5%", maxWidth="70%", margin="0 auto")),
                 rx.image(
                     src= f"/{State.username}-era2[0].jpg",
                     width="200px",
@@ -132,7 +133,7 @@ def eras_page() -> rx.Component:
                     box_shadow="5g",
                     style=dict(margin="0 auto", paddingBottom="3%")
                 ),
-                rx.text(f"you seem {data2[0]['words'][0]}, {data2[0]['words'][1]}, {data2[0]['words'][2]}, {data2[0]['words'][3]}, {data2[0]['words'][4]}, {data2[0]['words'][5]}, {data2[0]['words'][6]}, and {data2[0]['words'][7]} during this era", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
+                rx.text(f"you seem {data2[0]['words'][0]}, {data2[0]['words'][1]}, {data2[0]['words'][2]}, {data2[0]['words'][3]}, {data2[0]['words'][4]}, {data2[0]['words'][5]}, {data2[0]['words'][6]}, and {data2[0]['words'][7]} during this era", color="rgb(73, 67, 89)", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
                 rx.box(
                     rx.text("songs", align="center", weight="bold", style=dict(paddingTop="3%")),
                     rx.text(f"{data2[0]['songs'][0]['title']} - {data2[0]['songs'][0]['artist']}", align="center"),
@@ -143,7 +144,7 @@ def eras_page() -> rx.Component:
                 ),
             ),
             rx.box(
-                rx.heading(f"{data3[0]['vibe']} era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%", maxWidth="70%", margin="0 auto")),
+                rx.heading(f"{data3[0]['vibe']} era", size="6", color="rgb(45, 42, 54)", align="center", style=dict(paddingBottom="3%", paddingTop="5%", maxWidth="70%", margin="0 auto")),
                 rx.image(
                     src= f"/{State.username}-era3[0].jpg",
                     width="200px",
@@ -152,7 +153,7 @@ def eras_page() -> rx.Component:
                     style=dict(margin="0 auto", paddingBottom="3%")
                 ),
 
-                    rx.text(f"you're giving {data3[0]['words'][0]}, {data3[0]['words'][1]}, {data3[0]['words'][2]}, {data3[0]['words'][3]}, {data3[0]['words'][4]}, {data3[0]['words'][5]}, {data3[0]['words'][6]}, and {data3[0]['words'][7]}", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
+                    rx.text(f"you're giving {data3[0]['words'][0]}, {data3[0]['words'][1]}, {data3[0]['words'][2]}, {data3[0]['words'][3]}, {data3[0]['words'][4]}, {data3[0]['words'][5]}, {data3[0]['words'][6]}, and {data3[0]['words'][7]}", color="rgb(73, 67, 89)", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
                     rx.box(
                     rx.text("songs", align="center", weight="bold", style=dict(paddingTop="3%")),
                     rx.text(f"{data3[0]['songs'][0]['title']} - {data3[0]['songs'][0]['artist']}", align="center"),
@@ -167,8 +168,8 @@ def eras_page() -> rx.Component:
             width="100%",
             height="100%",
         ),
+        height="100%",
         background="radial-gradient(circle, rgba(205,227,246,1) 1%, rgba(211,210,241,1) 25%, rgba(218,198,239,1) 45%, rgba(204,189,232,1) 61%, rgba(228,182,233,1) 80%, rgba(233,148,213,1) 100%)",
-        height="100%"
     )
 
 
