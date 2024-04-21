@@ -8,8 +8,8 @@ from dotenv import load_dotenv
 from playlistmaker import make_playlist
 from download import *
 
+# Load Gemini API keys
 load_dotenv()
-
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Set up the model
@@ -18,7 +18,7 @@ generation_config = {
   "top_p": 0.95,
   "top_k": 0,
   "max_output_tokens": 8192,
-  "response_mime_type": "application/json",
+  "response_mime_type": "application/json"
 }
 
 safety_settings = [
@@ -37,7 +37,7 @@ safety_settings = [
   {
     "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
     "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-  },
+  }
 ]
 
 model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
@@ -57,6 +57,7 @@ def upload_if_needed(pathname: str) -> list[str]:
   return [uploaded_files[-1]]
 
 def username_to_eras_playlist(username):
+
   pics_per_era = get_era_posts(username)
 
   for i in range(len(pics_per_era)):
@@ -80,7 +81,11 @@ def username_to_eras_playlist(username):
       prompt_parts.append("")
       prompt_parts.append("output: ")
 
+    print(f"[{username}] Querying Gemini...")
+
     response = model.generate_content(prompt_parts).text
+
+    print(f"[{username}] Gemini reponse loaded!")
 
     json_obj = {"text": response}
 
@@ -88,10 +93,13 @@ def username_to_eras_playlist(username):
     f.write(response)
     f.close()
 
+    print(f"[{username}] Creating playlist...")
+
     make_playlist("song_list.txt", pics_per_era[i][1])
 
+    print(f"[{username}] Playlist created!")
 
     for uploaded_file in uploaded_files:
       genai.delete_file(name=uploaded_file.name)
     uploaded_files.clear()
-  print("playlists created")
+  print(f"[{username}] Program complete!")

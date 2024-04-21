@@ -5,6 +5,7 @@ def get_era_posts(username, private_user=False, password=""):
     os.system("rm assets/*.jpg")
 
     loader = instaloader.Instaloader(
+                quiet=True,
                 download_pictures=True,
                 download_videos=False,
                 download_video_thumbnails=False,
@@ -14,17 +15,23 @@ def get_era_posts(username, private_user=False, password=""):
                 )
     
     if (private_user):
+        print(f"[{username}] Logging in...")
+    
         loader.login(username, password)
+
+        print(f"[{username}] Logged in!")
 
     profile = instaloader.Profile.from_username(loader.context, username)
 
     posts = []
 
+    print(f"[{username}] Loading posts...")
+
     for post in profile.get_posts():
         if (not post.is_video):
             posts.append(post)
 
-    print("loaded posts")
+    print(f"[{username}] Posts loaded!")
 
     download_posts = []
 
@@ -60,11 +67,14 @@ def get_era_posts(username, private_user=False, password=""):
         else:
             urls.append([post.url])
 
+    print(f"[{username}] Downloading images...")
+
     era_count = []
     for i in range(len(download_posts)):
         era_count.append((len(urls[i]), download_posts[i].date))
         for j in range(len(urls[i])):
             loader.download_pic(filename=f"assets/{username}-era{len(download_posts)-i}[{j}]", url=urls[i][j], mtime=download_posts[i].date)
+            print(f"[{username}] Downloaded {username}-era{len(download_posts)-i}[{j}].jpg")
 
     era_count = era_count[::-1]
 

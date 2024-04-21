@@ -13,7 +13,7 @@ class State(rx.State):
     """The app state."""
     def generate_playlist(self, form_data: dict):
         self.form_data = form_data
-        print(form_data['prompt_text'])
+        print(f"Instagram handle: {form_data['prompt_text']}")
         username_to_eras_playlist(form_data['prompt_text'])
 
 

@@ -41,7 +41,7 @@ def make_playlist(file_path, era_date:datetime):
     # Create a new playlist
     playlist = sp.user_playlist_create(sp.me()['id'], f"{data[0]['vibe']} era", public=False)
     playlist_id = playlist['id']
-    playlist_description = f'your {month_dict[era_date.month]} {era_date.year} vibe: '
+    playlist_description = f'your {month_dict[era_date.month]} {era_date.year} vibes: '
     words = data[0]['words']
 
     for i in range(len(words)-1):
