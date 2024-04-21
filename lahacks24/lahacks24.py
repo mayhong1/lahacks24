@@ -1,60 +1,114 @@
-#lahacks24.py
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
-
 from rxconfig import config
 from vibe_generator import username_to_eras_playlist
 
+# run 'pip install passlib' and 'pip install bcrypt==4.0.1'
+import passlib.hash
+
+from pymongo import MongoClient
+from dotenv import load_dotenv
 import reflex as rx
+import os
+
+
 
 docs_url = "https://reflex.dev/docs/getting-started/introduction/"
 filename = f"{config.app_name}/{config.app_name}.py"
+load_dotenv()
+
+# Set up the MongoDB connection
+try:
+    client = MongoClient(os.getenv("MONGODB_URI"))
+    db = client["retrotune"]
+    users_collection = db["users"]
+except Exception as e:
+    print("Error connecting to MongoDB:", e)
 
 
 class State(rx.State):
     """The app state."""
+
     def generate_playlist(self, form_data: dict):
         self.form_data = form_data
         print(form_data['prompt_text'])
         username_to_eras_playlist(form_data['prompt_text'])
+
     def handle_login(self, form_data: dict):
-            # For now, just print the form data to the console
-            print(form_data)
+        username = form_data.get('username')
+        password = form_data.get('password')
+
+        user = users_collection.find_one({"username": username})
+
+        if user and passlib.hash.bcrypt.verify(password, user['password']):
+            # Correct credentials, redirect to the index page
+            print("Login successful!")
+            return rx.redirect("/")
+        else:
+            # User not found or incorrect password, redirect to the signup page
+            print("Incorrect username or password.")
+            # Optionally, pass a message to the signup page indicating a failed login attempt
+            return rx.redirect("/signup?error=login_failed")
+
+
+    def handle_signup(self, form_data: dict):
+        email = form_data.get('email')
+        username = form_data.get('username')
+        password = form_data.get('password')
+
+        # Check if user exists
+        if users_collection.find_one({"username": username}):
+            print("User already exists.")
+            # Redirect back to signup with an error message (implement error messaging in your actual app)
+            return rx.redirect("/signup")
+        
+        # Hash the password before storing
+        hashed_password = passlib.hash.bcrypt.hash(password)
+        
+        # Create user in the database
+        db.users.insert_one({
+            "email": email,
+            "username": username,
+            "password": hashed_password
+        })
+        print("User created successfully.")
+        # Redirect to login page after successful signup
+        return rx.redirect("/login")
 
 
 @rx.page(route="/")
 def index() -> rx.Component:
     return rx.center(
-        rx.vstack(
-            rx.heading("make a playlist out of your vibe", font_size="1.5em"),
-            rx.text("we analyze your instagram feed, detect the vibe, and make a playlist out of your vibe."),
-            rx.form(
-                rx.vstack(
-                    rx.input(
-                        id="prompt_text",
-                        placeholder="enter instagram username..",
-                        size="3",
-                    ),
-                    rx.button(
-                        "make playlist",
-                        type="submit",
-                        size="3",
-                    ),
-                    align="stretch",
-                    spacing="2",
+    rx.vstack(
+        rx.heading("make a playlist out of your vibe", font_size="1.5em"),
+        rx.text("we analyze your instagram feed, detect the vibe, and make a playlist out of your vibe."),
+        rx.form(
+            rx.vstack(
+                rx.input(
+                    id="prompt_text",
+                    placeholder="enter instagram username..",
+                    size="3",
                 ),
-                width="100%",
-                on_submit=State.generate_playlist,
+                rx.button(
+                    "make playlist",
+                    type="submit",
+                    size="3",
+                ),
+                align="stretch",
+                spacing="2",
             ),
-            rx.divider(),
-            width="25em",
-            bg="white",
-            padding="2em",
-            align="center",
+            width="100%",
+            on_submit=State.generate_playlist,
         ),
-        width="100%",
-        height="100vh",
-        background="radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)",
+        rx.divider(),
+        width="25em",
+        bg="white",
+        padding="2em",
+        align="center",
+    ),
+    width="100%",
+    height="100vh",
+    background="radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)",
     )
+    
 
 @rx.page(route="/eras_page")
 def eras_page() -> rx.Component:
@@ -183,8 +237,37 @@ def login_page() -> rx.Component:
     )
 
 
+@rx.page(route="/signup")
+def signup_page() -> rx.Component:
+    """Page to sign up a new user."""
+    return rx.center(
+        rx.box(
+            rx.heading("Sign Up", size="4", style={"margin-bottom": "10px"}),
+            rx.text("Please provide information below!", style={"margin-bottom": "10px"}),
+            rx.form(
+                rx.vstack(
+                    rx.input(id="email", placeholder="Email", size="3"),
+                    rx.input(id="username", placeholder="Username", size="3"),
+                    rx.input(id="password", placeholder="Password", type="password", size="3"),
+                    rx.button("Create Account", type="submit", size="3"),
+                ),
+                on_submit=State.handle_signup,
+                width="100%",
+            ),
+            bg="white",
+            padding="2em",
+            align="center",
+            width="25em",
+        ),
+        background="linear-gradient(120deg, #a6c0fe 0%, #f68084 100%)",
+        height="100vh",
+        width="100%",
+    )
+
 
 app = rx.App()
-app.add_page(index)
+app.add_page(index, route="/")
 app.add_page(eras_page)
-app.add_page(login_page, route="/login")  
+app.add_page(login_page, route="/login")
+app.add_page(signup_page, route="/signup")
+
