@@ -55,7 +55,9 @@ class State(rx.State):
         return rx.redirect("/")
     
     def to_eras(self):
-        return rx.redirect("/eras_page")
+        if (self.playlist_loaded):
+            return rx.redirect("/eras_page")
+        return rx.redirect("/")
     
     def to_logout(self):
         return rx.redirect("/log_out")
