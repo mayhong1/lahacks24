@@ -1,0 +1,38 @@
+[
+  {
+    "vibe": "regencycore but make it dark academia",
+    "songs": [
+      {
+        "title": "Would've, Could've, Should've",
+        "artist": "Taylor Swift"
+      },
+      {
+        "title": "Ribs",
+        "artist": "Lorde"
+      },
+      {
+        "title": "Motion Sickness",
+        "artist": "Phoebe Bridgers"
+      },
+      {
+        "title": "Liability",
+        "artist": "Lorde"
+      },
+      {
+        "title": "The Night Me and Your Mama Met",
+        "artist": "Childish Gambino"
+      }
+    ],
+    "words": [
+      "moody",
+      "romantic",
+      "elegant",
+      "sophisticated",
+      "dark",
+      "mysterious",
+      "poetic",
+      "vintage"
+    ]
+  }
+]
+

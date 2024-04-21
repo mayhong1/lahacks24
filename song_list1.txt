@@ -1,0 +1,38 @@
+[
+  {
+    "vibe": "indie/bedroom pop",
+    "songs": [
+      {
+        "title": "Sweater Weather",
+        "artist": "The Neighbourhood"
+      },
+      {
+        "title": "Ribs",
+        "artist": "Lorde"
+      },
+      {
+        "title": "Sofia",
+        "artist": "Clairo"
+      },
+      {
+        "title": "Pluto Projector",
+        "artist": "Rex Orange County"
+      },
+      {
+        "title": "Buzzcut Season",
+        "artist": "Lorde"
+      }
+    ],
+    "words": [
+      "carefree",
+      "youthful",
+      "nostalgic",
+      "dreamy",
+      "summery",
+      "bright",
+      "natural",
+      "aesthetic"
+    ]
+  }
+]
+
