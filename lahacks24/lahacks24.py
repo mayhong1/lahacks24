@@ -12,13 +12,6 @@ class State(rx.State):
     playlist_processing = False
     playlist_loaded = False
 
-    hovered: Optional[str] = None
-    def handle_mouse_enter(cls, button_name):
-        cls.hovered = button_name
-
-    def handle_mouse_leave(cls):
-        cls.hovered = None 
-
     # Stores the playlist data for each era
     data1: List[Dict[str, List[Dict[str, str]]]] = {}
     data2: List[Dict[str, List[Dict[str, str]]]] = {}
@@ -35,7 +28,6 @@ class State(rx.State):
         self.playlist_loaded = False
         self.playlist_processing = True
         yield
-        
 
         print(form_data['prompt_text'])
 
@@ -65,36 +57,19 @@ class State(rx.State):
     def to_eras(self):
         return rx.redirect("/eras_page")
 
-def handle_mouse_enter(button_name):
-    State.hovered = button_name
-    return None
-
-def handle_mouse_leave():
-    State.hovered = None
-    return None
-
 # Homepage
 @rx.page(route="/")
 def index() -> rx.Component:
-    # Home playlist settings centered at the top
 
     home_playlist_settings = rx.center(
         rx.hstack(
             rx.button("Home", 
-                color_scheme= rx.cond(State.hovered == "Home", "pink", "light-pink"),
-                color=rx.color("indigo", 1),
                 background_color=rx.color("pink", alpha=300),
-
-                on_mouse_enter=handle_mouse_enter("Home"),
-                on_mouse_leave=handle_mouse_leave(),
-                size="4",
                 borderRadius="39%",
+                size="4",
                 margin="30px 0"
             ), 
             rx.button("Playlist", 
-                color_scheme=rx.cond(State.hovered == "Playlist", "pink","light-pink"),
-                on_mouse_enter=handle_mouse_enter("Playlist"),
-                on_mouse_leave=handle_mouse_leave(),
                 background_color=rx.color("pink", alpha=300),
                 borderRadius="39%",
                 size="4",
@@ -102,11 +77,8 @@ def index() -> rx.Component:
                 on_click=State.to_eras
             ),
             rx.button("Log Out", 
-                color_scheme=rx.cond(State.hovered == "Log Out", "pink","light-pink"),
-                on_mouse_enter=handle_mouse_enter("Log Out"),
-                on_mouse_leave=handle_mouse_leave(),
-                borderRadius="39%",
                 background_color=rx.color("pink", alpha=300),
+                borderRadius="39%",
                 size="4",
                 margin="30px 0"
             ),
@@ -118,7 +90,7 @@ def index() -> rx.Component:
     )
 
     # RetroTune rounded box
-    reotrune_box = rx.vstack(
+    retrotune_box = rx.vstack(
         rx.heading("RetroTune", font_size="1.5em"),
         rx.text("Analyze your Insta vibe & craft a playlist to match."),
         rx.form(
@@ -162,7 +134,7 @@ def index() -> rx.Component:
     return rx.container(
         rx.vstack(
             home_playlist_settings,
-            reotrune_box,
+            retrotune_box,
             width="100%",
             height="100vh",
             spacing="9",
@@ -244,10 +216,10 @@ def eras_page() -> rx.Component:
         rx.center(
             rx.button(
                 "back",
-                size="3",
-                marginTop="4%",
-                marginBottom="4%",
-                background="rgba(18, 11, 38, 0.8)",
+                background_color=rx.color("pink", alpha=300),
+                borderRadius="39%",
+                size="4",
+                margin="30px 0",
                 on_click=State.to_index
             )
         ),
