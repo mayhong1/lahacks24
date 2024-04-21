@@ -4,46 +4,43 @@ from rxconfig import config
 from vibe_generator import username_to_eras_playlist
 from typing import List, Dict
 
-
-month_dict = {
-    1  : "January",
-    2  : "Februrary",
-    3  : "March",
-    4  : "April",
-    5  : "May",
-    6  : "June",
-    7  : "July",
-    8  : "August",
-    9  : "September",
-    10 : "October",
-    11 : "November",
-    12 : "December"
-}
-
+# The app state
 class State(rx.State):
-    """The app state."""
-
-    image_url="alicewang10t-era1[0].jpg"
-    username=""
+    image_url = ""
+    username = ""
     playlist_processing = False
     playlist_loaded = False
 
+    # Stores the playlist data for each era
     data1: List[Dict[str, List[Dict[str, str]]]] = {}
     data2: List[Dict[str, List[Dict[str, str]]]] = {}
     data3: List[Dict[str, List[Dict[str, str]]]] = {}
     
+    # Runs when "make playlist" button is pressed
     def generate_playlist(self, form_data: dict):
+
+        # Get username
         self.form_data = form_data
+        self.username = form_data['prompt_text']
+
+        # Start loading icon
         self.playlist_loaded = False
         self.playlist_processing = True
         yield
-        self.username=form_data['prompt_text']
+        
+
         print(form_data['prompt_text'])
-        username_to_eras_playlist(form_data['prompt_text'])
+
+        # Generate playlist data into song_list[0-2].txt
+        username_to_eras_playlist(self.username)
+
         print("*** FINISHED PROCESSING ***\n")
+
+        # No more loading icon
         self.playlist_processing = False
         self.playlist_loaded = True
 
+        # Load playlist data into data[1-3]
         with open("song_list0.txt", 'r') as file:
             self.data1 = json.load(file)
         with open("song_list1.txt", 'r') as file:
@@ -51,15 +48,18 @@ class State(rx.State):
         with open("song_list2.txt", 'r') as file:
             self.data3 = json.load(file)
 
-
+        # Redirect to the eras page
         return rx.redirect("/eras_page")
 
+# Homepage
 @rx.page(route="/")
 def index() -> rx.Component:
     return rx.center(
         rx.vstack(
             rx.heading("make a playlist out of your vibe", font_size="1.5em"),
             rx.text("we analyze your instagram feed, detect the vibe, and make a playlist out of your vibe."),
+
+            # Form to enter username
             rx.form(
                 rx.vstack(
                     rx.input(
@@ -93,9 +93,9 @@ def index() -> rx.Component:
         background="radial-gradient(circle, rgba(174,208,238,1) 0%, rgba(233,148,213,1) 100%)",
     )
 
+# Playlists page
 @rx.page(route="/eras_page")
 def eras_page() -> rx.Component:
-
     return rx.box(
         rx.box(
             rx.heading(f"{State.username}'s eras tour", size="7", align="center", style=dict(paddingBottom="2%", paddingTop="2%", color="white")),
@@ -180,7 +180,7 @@ def eras_page() -> rx.Component:
         background="radial-gradient(circle, rgba(205,227,246,1) 1%, rgba(211,210,241,1) 25%, rgba(218,198,239,1) 45%, rgba(204,189,232,1) 61%, rgba(228,182,233,1) 80%, rgba(233,148,213,1) 100%)",
     )
 
-
+# Initialize website
 app = rx.App()
 app.add_page(index)
 app.add_page(eras_page)
