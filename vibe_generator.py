@@ -6,7 +6,7 @@ import google.generativeai as genai
 from pathlib import Path
 from dotenv import load_dotenv
 from playlistmaker import make_playlist
-from download import *
+from download import get_era_posts
 
 # Load the .env file
 load_dotenv()
