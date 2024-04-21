@@ -88,7 +88,7 @@ def index() -> rx.Component:
             justify="center",  # Center the buttons horizontally,
             spacing="3",
             width="100%", #need width="100%" twice for this to work 
-            on_click=State.to_logout
+            #on_click=State.to_logout
         ), 
         width="100%"
     )
