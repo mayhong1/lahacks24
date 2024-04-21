@@ -1,0 +1,38 @@
+[
+  {
+    "vibe": "y2k but make it dark academia",
+    "songs": [
+      {
+        "title": "Haunted",
+        "artist": "Laura Les"
+      },
+      {
+        "title": "5:32",
+        "artist": "The Neighbourhood"
+      },
+      {
+        "title": "Francis Forever",
+        "artist": "Mitski"
+      },
+      {
+        "title": "Ribs",
+        "artist": "Lorde"
+      },
+      {
+        "title": "Sweater Weather",
+        "artist": "The Neighbourhood"
+      }
+    ],
+    "words": [
+      "night",
+      "city",
+      "grunge",
+      "edgy",
+      "confident",
+      "cool",
+      "alone",
+      "sensual"
+    ]
+  }
+]
+

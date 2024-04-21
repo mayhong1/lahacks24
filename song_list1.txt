@@ -1,0 +1,37 @@
+[
+  {
+    "vibe": "indie/baddie",
+    "songs": [
+      {
+        "title": "Ribs",
+        "artist": "Lorde"
+      },
+      {
+        "title": "Buzzcut Season",
+        "artist": "Lorde"
+      },
+      {
+        "title": "Ivy",
+        "artist": "Frank Ocean"
+      },
+      {
+        "title": "Lost",
+        "artist": "Frank Ocean"
+      },
+      {
+        "title": "Self Control",
+        "artist": "Frank Ocean"
+      }
+    ],
+    "words": [
+      "carefree",
+      "confident",
+      "golden hour",
+      "grunge",
+      "indie",
+      "nostalgic",
+      "reflective",
+      "youthful"
+    ]
+  }
+]

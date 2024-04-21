@@ -1,0 +1,37 @@
+[
+  {
+    "vibe": "indie sleaze but make it 2023",
+    "songs": [
+      {
+        "title": "Ribs",
+        "artist": "Lorde"
+      },
+      {
+        "title": "Francis Forever",
+        "artist": "Mitski"
+      },
+      {
+        "title": "505",
+        "artist": "Arctic Monkeys"
+      },
+      {
+        "title": "Video Games",
+        "artist": "Lana Del Rey"
+      },
+      {
+        "title": "Buzzcut Season",
+        "artist": "Lorde"
+      }
+    ],
+    "words": [
+      "nostalgia",
+      "city",
+      "grunge",
+      "nightlife",
+      "indie",
+      "dark",
+      "edgy",
+      "cool"
+    ]
+  }
+]

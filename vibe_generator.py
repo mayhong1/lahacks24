@@ -63,7 +63,7 @@ def username_to_eras_playlist(username):
   for i in range(len(pics_per_era)):
     if (pics_per_era[i][0] > 1):
       prompt_parts = [
-        "input: What is the vibe of these images (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of these images. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of these images. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key"
+        "input: If these images were an era what would it be (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of these images. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of these images. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key. The outermost brackets should be []"
       ]
     
       for j in range(pics_per_era[i][0]):
@@ -74,7 +74,7 @@ def username_to_eras_playlist(username):
 
     else:
       prompt_parts = [
-        "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key"
+        "input: If these images was an era what would it be (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of these images. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of these images. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key. The outermost brackets should be []"
       ]
 
       prompt_parts.append(*upload_if_needed(f"assets/{username}-era{i+1}[0].jpg"))
@@ -84,18 +84,23 @@ def username_to_eras_playlist(username):
     print(f"[{username}] Querying Gemini...")
 
     response = model.generate_content(prompt_parts).text
+    
+    
 
     print(f"[{username}] Gemini reponse loaded!")
 
     json_obj = {"text": response}
 
-    f = open("song_list.txt", "w")
+
+    file_name='song_list' + str(i) + '.txt'
+  
+    f = open(file_name, "w")
     f.write(response)
     f.close()
 
     print(f"[{username}] Creating playlist...")
 
-    make_playlist("song_list.txt", pics_per_era[i][1])
+    make_playlist(file_name, pics_per_era[i][1])
 
     print(f"[{username}] Playlist created!")
 
