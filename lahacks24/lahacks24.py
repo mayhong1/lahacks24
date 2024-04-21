@@ -1,6 +1,7 @@
 from rxconfig import config
 from vibe_generator import username_to_eras_playlist
-
+import json
+from typing import List, Dict
 # run 'pip install passlib' and 'pip install bcrypt==4.0.1'
 import passlib.hash
 
@@ -15,6 +16,7 @@ docs_url = "https://reflex.dev/docs/getting-started/introduction/"
 filename = f"{config.app_name}/{config.app_name}.py"
 load_dotenv()
 
+
 # Set up the MongoDB connection
 try:
     client = MongoClient(os.getenv("MONGODB_URI"))
@@ -24,14 +26,61 @@ except Exception as e:
     print("Error connecting to MongoDB:", e)
 
 
+#loading JSON files
+
+month_dict = {
+    1  : "January",
+    2  : "Februrary",
+    3  : "March",
+    4  : "April",
+    5  : "May",
+    6  : "June",
+    7  : "July",
+    8  : "August",
+    9  : "September",
+    10 : "October",
+    11 : "November",
+    12 : "December"
+}
+
+# setting up variables
+# title: d
+
 class State(rx.State):
     """The app state."""
 
+
+    image_url="alicewang10t-era1[0].jpg"
+    username=""
+    playlist_processing = False
+    playlist_loaded = False
+
+    data1: List[Dict[str, List[Dict[str, str]]]] = {}
+    data2: List[Dict[str, List[Dict[str, str]]]] = {}
+    data3: List[Dict[str, List[Dict[str, str]]]] = {}
+    
     def generate_playlist(self, form_data: dict):
         self.form_data = form_data
+        self.playlist_loaded = False
+        self.playlist_processing = True
+        yield
+        self.username=form_data['prompt_text']
         print(form_data['prompt_text'])
         username_to_eras_playlist(form_data['prompt_text'])
+        print("FINISHED PROCESSING")
+        self.playlist_processing = False
+        self.playlist_loaded = True
 
+        with open("song_list0.txt", 'r') as file:
+            self.data1 = json.load(file)
+        with open("song_list1.txt", 'r') as file:
+            self.data2 = json.load(file)
+        with open("song_list2.txt", 'r') as file:
+            self.data3 = json.load(file)
+
+
+        return rx.redirect("/eras_page")
+    
     def handle_login(self, form_data: dict):
         username = form_data.get('username')
         password = form_data.get('password')
@@ -77,127 +126,131 @@ class State(rx.State):
 @rx.page(route="/")
 def index() -> rx.Component:
     return rx.center(
-    rx.vstack(
-        rx.heading("make a playlist out of your vibe", font_size="1.5em"),
-        rx.text("we analyze your instagram feed, detect the vibe, and make a playlist out of your vibe."),
-        rx.form(
-            rx.vstack(
-                rx.input(
-                    id="prompt_text",
-                    placeholder="enter instagram username..",
-                    size="3",
+        rx.vstack(
+            rx.heading("make a playlist out of your vibe", font_size="1.5em"),
+            rx.text("we analyze your instagram feed, detect the vibe, and make a playlist out of your vibe."),
+            rx.form(
+                rx.vstack(
+                    rx.input(
+                        id="prompt_text",
+                        placeholder="enter instagram username..",
+                        size="3",
+                    ),
+                    rx.button(
+                        "make playlist",
+                        type="submit",
+                        size="3",
+                    ),
+                    align="stretch",
+                    spacing="2",
                 ),
-                rx.button(
-                    "make playlist",
-                    type="submit",
-                    size="3",
-                ),
-                align="stretch",
-                spacing="2",
+                width="100%",
+                on_submit=State.generate_playlist,
             ),
-            width="100%",
-            on_submit=State.generate_playlist,
+            rx.divider(),
+            # rx.cond(
+            #     State.playlist_processing,
+            #     rx.chakra.circular_progress(is_indeterminate=True),
+            # ),
+            width="25em",
+            bg="white",
+            padding="2em",
+            align="center",
         ),
-        rx.divider(),
-        width="25em",
-        bg="white",
-        padding="2em",
-        align="center",
-    ),
-    width="100%",
-    height="100vh",
-    background="radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)",
+        width="100%",
+        height="100vh",
+        background="radial-gradient(circle, rgba(174,208,238,1) 0%, rgba(233,148,213,1) 100%)",
     )
     
 
 @rx.page(route="/eras_page")
 def eras_page() -> rx.Component:
+
     return rx.box(
-        rx.heading("username's eras tour", size="7", align="center", style=dict(paddingBottom="2%", paddingTop="3%")),
-        rx.text("using AI, we analyzed your instagram feed, discovered these eras of your life, and made a playlist based off the vibe.", align="center", style=dict(paddingBottom="2%", paddingTop="0%")),
+        rx.box(
+            rx.heading(f"{State.username}'s eras tour", size="7", align="center", style=dict(paddingBottom="2%", paddingTop="2%", color="white")),
+            rx.text("using AI, we analyzed your instagram feed, discovered these eras of your life, and made playlists based off the vibe.", color="white", align="center", style=dict(paddingBottom="2%", paddingTop="0%")),
+            background="rgba(18, 11, 38, 0.8)"
+        ),
         rx.grid(
             rx.box(
-                rx.heading("study era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%")),
+                rx.heading(f"{State.data1[0]['vibe']} era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%", maxWidth="70%", margin="0 auto")),
                 rx.image(
-                    src="/testimage.jpg",
+                    src= f"/{State.username}-era1[0].jpg",
                     width="200px",
                     height="auto",
                     box_shadow="lg",
                     style=dict(margin="0 auto", paddingBottom="3%")
                 ),
-                rx.text(
-                    rx.text.em("september 2023"),
-                    style=dict(paddingBottom="2%", maxWidth="70%", margin="0 auto"), 
-                    align="center"
-                ),
-                rx.text("in this era you grinded out work at the library or a cafe while look effortlessly cool doing so", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
+                rx.text(f"during this time of your life, you were {State.data1[0]['words'][0]}, {State.data1[0]['words'][1]}, {State.data1[0]['words'][2]}, {State.data1[0]['words'][3]}, {State.data1[0]['words'][4]}, {State.data1[0]['words'][5]}, {State.data1[0]['words'][6]}, and {State.data1[0]['words'][7]}", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
                 rx.box(
                     rx.text("songs", align="center", weight="bold", style=dict(paddingTop="3%")),
-                    rx.text("ivy - frank ocean", align="center"),
-                    rx.text("sunflower - post malone", align="center"),
-                    rx.text("style - taylor swift", align="center"),
-                    rx.text("maniac - conan gray", align="center"),
-                    rx.text("last friday night - katy perry", align="center"),
+                    rx.text(f"{State.data1[0]['songs'][0]['title']} - {State.data1[0]['songs'][0]['artist']}", align="center"),
+                    rx.text(f"{State.data1[0]['songs'][1]['title']} - {State.data1[0]['songs'][1]['artist']}", align="center"),
+                    rx.text(f"{State.data1[0]['songs'][2]['title']} - {State.data1[0]['songs'][2]['artist']}", align="center"),
+                    rx.text(f"{State.data1[0]['songs'][3]['title']} - {State.data1[0]['songs'][3]['artist']}", align="center"),
+                    rx.text(f"{State.data1[0]['songs'][4]['title']} - {State.data1[0]['songs'][4]['artist']}", align="center"),
                 ),
             ),
             rx.box(
-                rx.heading("main character era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%")),
+                rx.heading(f"{State.data2[0]['vibe']} era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%", maxWidth="70%", margin="0 auto")),
                 rx.image(
-                    src="/5.jpg",
+                    src= f"/{State.username}-era2[0].jpg",
                     width="200px",
                     height="auto",
                     box_shadow="5g",
                     style=dict(margin="0 auto", paddingBottom="3%")
                 ),
-                rx.text(
-                    rx.text.em("november 2017"),
-                    style=dict(paddingBottom="2%", maxWidth="70%", margin="0 auto"), 
-                    align="center"
-                ),
-                rx.text("in this era you were a main character sunt in culpa qui officia deserunt mollit anim id ", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
+                rx.text(f"you seem {State.data2[0]['words'][0]}, {State.data2[0]['words'][1]}, {State.data2[0]['words'][2]}, {State.data2[0]['words'][3]}, {State.data2[0]['words'][4]}, {State.data2[0]['words'][5]}, {State.data2[0]['words'][6]}, and {State.data2[0]['words'][7]} during this era", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
                 rx.box(
                     rx.text("songs", align="center", weight="bold", style=dict(paddingTop="3%")),
-                    rx.text("sicko mode - travis scott", align="center"),
-                    rx.text("heather - conan gray", align="center"),
-                    rx.text("mr. rager - kid cudi", align="center"),
-                    rx.text("the last great american dynasty - taylor swift", align="center"),
-                    rx.text("kilby girl - the backseat lovers", align="center"),
+                    rx.text(f"{State.data2[0]['songs'][0]['title']} - {State.data2[0]['songs'][0]['artist']}", align="center"),
+                    rx.text(f"{State.data2[0]['songs'][1]['title']} - {State.data2[0]['songs'][1]['artist']}", align="center"),
+                    rx.text(f"{State.data2[0]['songs'][2]['title']} - {State.data2[0]['songs'][2]['artist']}", align="center"),
+                    rx.text(f"{State.data2[0]['songs'][3]['title']} - {State.data2[0]['songs'][3]['artist']}", align="center"),
+                    rx.text(f"{State.data2[0]['songs'][4]['title']} - {State.data2[0]['songs'][4]['artist']}", align="center"),
                 ),
             ),
             rx.box(
-                rx.heading("indie boy era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%")),
+                rx.heading(f"{State.data3[0]['vibe']} era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%", maxWidth="70%", margin="0 auto")),
                 rx.image(
-                    src="/4.jpg",
+                    src= f"/{State.username}-era3[0].jpg",
                     width="200px",
                     height="auto",
                     box_shadow="lg",
                     style=dict(margin="0 auto", paddingBottom="3%")
                 ),
-                rx.text(
-                    rx.text.em("july 2019"),
-                    style=dict(paddingBottom="2%", maxWidth="70%", margin="0 auto"), 
-                    align="center"
-                ),
-                rx.text("in this era you were an indie boy aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
+
+                    rx.text(f"you're giving {State.data3[0]['words'][0]}, {State.data3[0]['words'][1]}, {State.data3[0]['words'][2]}, {State.data3[0]['words'][3]}, {State.data3[0]['words'][4]}, {State.data3[0]['words'][5]}, {State.data3[0]['words'][6]}, and {State.data3[0]['words'][7]}", style=dict(maxWidth="70%", margin="0 auto"), align="center"),
                     rx.box(
                     rx.text("songs", align="center", weight="bold", style=dict(paddingTop="3%")),
-                    rx.text("kyoto - phoebe bridgers", align="center"),
-                    rx.text("trouble - cage the elephant", align="center"),
-                    rx.text("lemon boy - cavetown", align="center"),
-                    rx.text("roddy - djo", align="center"),
-                    rx.text("hot rod - day glow", align="center"),
+                    rx.text(f"{State.data3[0]['songs'][0]['title']} - {State.data3[0]['songs'][0]['artist']}", align="center"),
+                    rx.text(f"{State.data3[0]['songs'][1]['title']} - {State.data3[0]['songs'][1]['artist']}", align="center"),
+                    rx.text(f"{State.data3[0]['songs'][2]['title']} - {State.data3[0]['songs'][2]['artist']}", align="center"),
+                    rx.text(f"{State.data3[0]['songs'][3]['title']} - {State.data3[0]['songs'][3]['artist']}", align="center"),
+                    rx.text(f"{State.data3[0]['songs'][4]['title']} - {State.data3[0]['songs'][4]['artist']}", align="center"),
                 ),
             ),
-            bg="white",
-            background="radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)",
             columns="3",
             rows="1",
             width="100%",
             height="100%",
         ),
-        background="white",
+        rx.center(
+            rx.button(
+                "generate on spotify",
+                type="submit",
+                size="3",
+                marginTop="4%",
+                marginBottom="4%",
+                background="rgba(18, 11, 38, 0.8)"
+            )
+        ),
+        height="100%",
+        background="radial-gradient(circle, rgba(205,227,246,1) 1%, rgba(211,210,241,1) 25%, rgba(218,198,239,1) 45%, rgba(204,189,232,1) 61%, rgba(228,182,233,1) 80%, rgba(233,148,213,1) 100%)",
 
     )
+
 
 
 @rx.page(route="/login")
