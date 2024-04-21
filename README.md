@@ -7,15 +7,15 @@ To initialize and run this project on your own computer, first install Reflex wi
 ```
 pip3 install reflex
 ```
-Next, you can initialize our project from the Github with
+Next, you can initialize our project from the Github with:
 ```
 reflex init --template 'https://github.com/mayhong1/lahacks24.git'
 ```
-Install the other necessary dependencies with
+Install the other necessary dependencies with:
 ```
 pip3 install -r requirements.txt
 ```
-Finally, to run the project type
+Finally, to run the project type:
 ```
 reflex run
 ```
