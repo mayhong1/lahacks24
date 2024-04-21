@@ -5,7 +5,6 @@ import sys
 import hashlib
 from pathlib import Path
 from dotenv import load_dotenv
-from download import download_user
 from playlistmaker import make_playlist
 from download import *
 
@@ -57,35 +56,41 @@ def upload_if_needed(pathname: str) -> list[str]:
   uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
   return [uploaded_files[-1]]
 
-# Downloading the images
+def username_to_eras_playlist(username):
+  pics_per_era = get_era_posts(username)
 
-def username_to_playlist(username):
+  for i in range(len(pics_per_era)):
+    if (pics_per_era[i][0] > 1):
+      prompt_parts = [
+        "input: What is the vibe of these images (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of these images. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of these images. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key"
+      ]
+    
+      for j in range(pics_per_era[i][0]):
+        prompt_parts.append(*upload_if_needed(f"assets/{username}-era{i+1}[{j}].jpg"))
+      
+      prompt_parts.append("")
+      prompt_parts.append("output: ")
 
-  #Download images
-  get_era_posts(username)
+    else:
+      prompt_parts = [
+        "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key"
+      ]
 
-  # Modify prompt and image path here
-  prompt_parts = [
-    "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key"
-    ]
+      prompt_parts.append(*upload_if_needed(f"assets/{username}-era{i+1}[0].jpg"))
+      prompt_parts.append("")
+      prompt_parts.append("output: ")
 
-  for filename in os.listdir(username):
-      prompt_parts.append(*upload_if_needed(f"{username}/{filename}"))
+    response = model.generate_content(prompt_parts).text
 
-  prompt_parts.append("")
-  prompt_parts.append("output: ")
+    json_obj = {"text": response}
 
-  response = model.generate_content(prompt_parts).text
+    with open('song_list.txt', 'w') as file:
+      # Write the content to the file
+      file.write(response)
 
-  json_obj = {"text": response}
+    make_playlist("song_list.txt", pics_per_era[i][1])
 
-  with open('song_list.txt', 'w') as file:
-    # Write the content to the file
-    file.write(response)
-
-  make_playlist("song_list.txt")
-
-  for uploaded_file in uploaded_files:
-    genai.delete_file(name=uploaded_file.name)
-  
-  print("Playlist generated")
+    for uploaded_file in uploaded_files:
+      genai.delete_file(name=uploaded_file.name)
+    uploaded_files.clear()
+  print("playlists created")

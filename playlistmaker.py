@@ -3,11 +3,27 @@ from spotipy.oauth2 import SpotifyOAuth
 import json
 from dotenv import load_dotenv
 import os
+import datetime
+
+month_dict = {
+    1  : "January",
+    2  : "Februrary",
+    3  : "March",
+    4  : "April",
+    5  : "May",
+    6  : "June",
+    7  : "July",
+    8  : "August",
+    9  : "September",
+    10 : "October",
+    11 : "November",
+    12 : "December"
+}
 
 load_dotenv()
 
 # Load the JSON file
-def make_playlist(file_path):
+def make_playlist(file_path, era_date:datetime):
     with open(file_path, 'r') as file:
         # Load the JSON data from the file into a Python object
         data = json.load(file)
@@ -22,13 +38,14 @@ def make_playlist(file_path):
                                                 scope='playlist-modify-private'))
 
     # Create a new playlist
-    playlist = sp.user_playlist_create(sp.me()['id'], data[0]['vibe'], public=False)
+    playlist = sp.user_playlist_create(sp.me()['id'], f"{data[0]['vibe']} era", public=False)
     playlist_id = playlist['id']
-    playlist_description = ''
+    playlist_description = f'Your {month_dict[era_date.month]} {era_date.year} vibe: '
     words = data[0]['words']
 
-    for word in words:
-        playlist_description = playlist_description + word + ", "
+    for i in range(len(words)-1):
+        playlist_description = playlist_description + words[i] + ", "
+    playlist_description = playlist_description + words[len(words)-1]
     
     sp.playlist_change_details(playlist_id, description=playlist_description)
 

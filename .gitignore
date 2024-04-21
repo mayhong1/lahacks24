@@ -5,5 +5,5 @@
 .venv/
 .web
 __pycache__/
-song_list.txt
+assets/*.jpg
 generated_content.json

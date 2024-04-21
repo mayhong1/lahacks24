@@ -1,23 +1,9 @@
 import instaloader, os, datetime, sys
 
-def download_user(username, private_user=False, password=""):
-    loader = instaloader.Instaloader(
-                download_pictures=True,
-                download_videos=False,
-                download_video_thumbnails=False,
-                save_metadata=False,
-                compress_json=False,
-                post_metadata_txt_pattern=""
-                )
-
-    if (private_user):
-        loader.login(username, password)
-
-    profile = instaloader.Profile.from_username(loader.context, username)
-
-    loader.download_profiles({profile}, profile_pic=False)
-
+# Returns the number of different eras
 def get_era_posts(username, private_user=False, password=""):
+    os.system("rm assets/*.jpg")
+
     loader = instaloader.Instaloader(
                 download_pictures=True,
                 download_videos=False,
@@ -74,6 +60,12 @@ def get_era_posts(username, private_user=False, password=""):
         else:
             urls.append([post.url])
 
+    era_count = []
     for i in range(len(download_posts)):
+        era_count.append((len(urls[i]), download_posts[i].date))
         for j in range(len(urls[i])):
             loader.download_pic(filename=f"assets/{username}-era{len(download_posts)-i}[{j}]", url=urls[i][j], mtime=download_posts[i].date)
+
+    era_count = era_count[::-1]
+
+    return era_count
