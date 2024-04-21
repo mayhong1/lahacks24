@@ -1,8 +1,9 @@
 import json
 import reflex as rx
 from rxconfig import config
+import reflex as rx
 from vibe_generator import username_to_eras_playlist
-from typing import List, Dict
+from typing import List, Dict, Optional
 
 # The app state
 class State(rx.State):
@@ -10,6 +11,13 @@ class State(rx.State):
     username = ""
     playlist_processing = False
     playlist_loaded = False
+
+    hovered: Optional[str] = None
+    def handle_mouse_enter(cls, button_name):
+        cls.hovered = button_name
+
+    def handle_mouse_leave(cls):
+        cls.hovered = None 
 
     # Stores the playlist data for each era
     data1: List[Dict[str, List[Dict[str, str]]]] = {}
@@ -51,60 +59,124 @@ class State(rx.State):
         # Redirect to the eras page
         return rx.redirect("/eras_page")
     
-    def back_to_index(self):
+    def to_index(self):
         return rx.redirect("/")
+    
+    def to_eras(self):
+        return rx.redirect("/eras_page")
+
+def handle_mouse_enter(button_name):
+    State.hovered = button_name
+    return None
+
+def handle_mouse_leave():
+    State.hovered = None
+    return None
 
 # Homepage
 @rx.page(route="/")
 def index() -> rx.Component:
-    return rx.center(
-        rx.vstack(
-            rx.heading("make a playlist out of your vibe", font_size="1.5em"),
-            rx.text("we analyze your instagram feed, detect the vibe, and make a playlist out of your vibe."),
+    # Home playlist settings centered at the top
 
-            # Form to enter username
-            rx.form(
-                rx.vstack(
-                    rx.input(
-                        id="prompt_text",
-                        placeholder="enter instagram username..",
-                        size="3",
-                    ),
+    home_playlist_settings = rx.center(
+        rx.hstack(
+            rx.button("Home", 
+                color_scheme= rx.cond(State.hovered == "Home", "pink", "light-pink"),
+                color=rx.color("indigo", 1),
+                background_color=rx.color("pink", alpha=300),
+
+                on_mouse_enter=handle_mouse_enter("Home"),
+                on_mouse_leave=handle_mouse_leave(),
+                size="4",
+                borderRadius="39%",
+                margin="30px 0"
+            ), 
+            rx.button("Playlist", 
+                color_scheme=rx.cond(State.hovered == "Playlist", "pink","light-pink"),
+                on_mouse_enter=handle_mouse_enter("Playlist"),
+                on_mouse_leave=handle_mouse_leave(),
+                background_color=rx.color("pink", alpha=300),
+                borderRadius="39%",
+                size="4",
+                margin="30px 0",
+                on_click=State.to_eras
+            ),
+            rx.button("Log Out", 
+                color_scheme=rx.cond(State.hovered == "Log Out", "pink","light-pink"),
+                on_mouse_enter=handle_mouse_enter("Log Out"),
+                on_mouse_leave=handle_mouse_leave(),
+                borderRadius="39%",
+                background_color=rx.color("pink", alpha=300),
+                size="4",
+                margin="30px 0"
+            ),
+            justify="center",  #Center the buttons horizontally,
+            spacing="3",
+            width="100%" #need width="100%" twice for this to work 
+        ), 
+        width="100%"
+    )
+
+    # RetroTune rounded box
+    reotrune_box = rx.vstack(
+        rx.heading("RetroTune", font_size="1.5em"),
+        rx.text("Analyze your Insta vibe & craft a playlist to match."),
+        rx.form(
+            rx.vstack(
+                rx.input(
+                    id="prompt_text",
+                    placeholder="Enter Instagram Username...",
+                    size="3",
+                    radius="large",
+                    style={"color": "black", "background-color": "white", "border": "1px solid #ccc", "outline": "none", "font-weight":"800", "font-size": "100%"}
+                ),
+                rx.center(
                     rx.button(
                         "make playlist",
                         type="submit",
                         size="3",
-                    ),
-                    align="stretch",
-                    spacing="2",
+                        radius="full",
+                        background_color=rx.color("pink", alpha=300),
+                        style={"width": "150px"}
+                    )
                 ),
-                width="100%",
-                on_submit=State.generate_playlist,
+                align="stretch",
+                spacing="2",
             ),
-            rx.divider(),
-            rx.cond(
-                State.playlist_processing,
-                rx.chakra.circular_progress(is_indeterminate=True),
-            ),
-            width="25em",
-            bg="white",
-            padding="2em",
-            align="center",
+            width="100%",
+            on_submit=State.generate_playlist,
         ),
-        width="100%",
-        height="100vh",
+        rx.divider(),
+        rx.cond(
+            State.playlist_processing,
+            rx.chakra.circular_progress(is_indeterminate=True),
+        ),
+        bg="white",
+        padding="2em",
+        align="center",
+        borderRadius="10%",
+        width="100%"
+    )
+
+    # Stack the elements vertically with home settings on top
+    return rx.container(
+        rx.vstack(
+            home_playlist_settings,
+            reotrune_box,
+            width="100%",
+            height="100vh",
+            spacing="9",
+        ),
         background="radial-gradient(circle, rgba(174,208,238,1) 0%, rgba(233,148,213,1) 100%)",
+        size="1",
     )
 
 # Playlists page
 @rx.page(route="/eras_page")
 def eras_page() -> rx.Component:
     return rx.box(
-        rx.box(
-            rx.heading(f"{State.username}'s eras tour", size="7", align="center", style=dict(paddingBottom="2%", paddingTop="2%", color="white")),
-            rx.text("using AI, we analyzed your instagram feed, discovered these eras of your life, and made playlists based off the vibe.", color="white", align="center", style=dict(paddingBottom="2%", paddingTop="0%")),
-            background="rgba(18, 11, 38, 0.8)"
-        ),
+        rx.heading("username's eras tour", size="7", align="center", style=dict(paddingBottom="2%", paddingTop="3%")),
+        rx.text("Your Life, Your Music: Our AI has scanned your Instagram to craft playlists that echo the eras of your life.", align="center", style=dict(paddingBottom="2%", paddingTop="0%")),
         rx.grid(
             rx.box(
                 rx.heading(f"{State.data1[0]['vibe']} era", size="5", align="center", style=dict(paddingBottom="3%", paddingTop="2%", maxWidth="70%", margin="0 auto")),
@@ -176,14 +248,33 @@ def eras_page() -> rx.Component:
                 marginTop="4%",
                 marginBottom="4%",
                 background="rgba(18, 11, 38, 0.8)",
-                on_click=State.back_to_index
+                on_click=State.to_index
             )
         ),
         height="100%",
         background="radial-gradient(circle, rgba(205,227,246,1) 1%, rgba(211,210,241,1) 25%, rgba(218,198,239,1) 45%, rgba(204,189,232,1) 61%, rgba(228,182,233,1) 80%, rgba(233,148,213,1) 100%)",
     )
 
+@rx.page(route="log_out")
+def log_out() -> rx.Component:
+    return rx.container(
+        rx.heading("You have been logged out", size="5", align="center", style={"paddingBottom": "3%", "paddingTop": "2%"}),
+        rx.text("Thank you for using RetroTune!", align="center", style={"paddingBottom": "2%"}),
+        rx.button(
+            "Log In Again",
+            on_click=lambda: rx.redirect("/login"),  # Assuming '/login' is your login route
+            style={"marginTop": "20px", "display": "block", "margin": "0 auto"}
+        ),
+        rx.button(
+            "Go to Home",
+            on_click=lambda: rx.redirect("/"),  # Assuming '/' is your home route
+            style={"marginTop": "10px", "display": "block", "margin": "0 auto"}
+        ),
+        style={"textAlign": "center", "padding": "50px"}
+    )
+
 # Initialize website
 app = rx.App()
 app.add_page(index)
 app.add_page(eras_page)
+app.add_page(log_out)
