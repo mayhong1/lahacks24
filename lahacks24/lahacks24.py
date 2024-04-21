@@ -49,7 +49,7 @@ class State(rx.State):
         self.username=form_data['prompt_text']
         print(form_data['prompt_text'])
         username_to_eras_playlist(form_data['prompt_text'])
-        print("FINISHED PROCESSING")
+        print("*** FINISHED PROCESSING ***\n")
         self.playlist_processing = False
         self.playlist_loaded = True
 
