@@ -72,7 +72,7 @@ def username_to_eras_playlist(username):
 
       # Create prompt to query Gemini
       prompt_parts = [
-        "input: If these images were an era what would it be (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of these images. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of these images. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key. The outermost brackets should be []"
+        "input: What is the vibe of these images (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of these images. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of these images. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key. The outermost brackets should be []"
       ]
 
       # Upload relevant images
@@ -87,7 +87,7 @@ def username_to_eras_playlist(username):
 
       # Create prompt to query Gemini
       prompt_parts = [
-        "input: If these images was an era what would it be (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of these images. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of these images. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key. The outermost brackets should be []"
+        "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key. The outermost brackets should be []"
       ]
 
       # Upload relevant image
