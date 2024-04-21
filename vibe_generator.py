@@ -1,17 +1,17 @@
 # vibe_generator.py
 
 import google.generativeai as genai
-from pathlib import Path
-import hashlib
-from dotenv import load_dotenv
 import os
 import json
+import sys
+import hashlib
+from pathlib import Path
+from dotenv import load_dotenv
 from playlistmaker import make_playlist
-
+from download import *
 
 load_dotenv()
 
-# Replace with your API key
 genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
 # Set up the model
@@ -58,27 +58,42 @@ def upload_if_needed(pathname: str) -> list[str]:
   uploaded_files.append(genai.upload_file(path=path, display_name=hash_id))
   return [uploaded_files[-1]]
 
-# Modify prompt and image path here
-prompt_parts = [
-  "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. artists should repeat at most twice. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key",
-  *upload_if_needed("testimage.jpg"),
-  "output: ",
-]
+def username_to_eras_playlist(username):
+  pics_per_era = get_era_posts(username)
 
-response = model.generate_content(prompt_parts).text
+  for i in range(len(pics_per_era)):
+    if (pics_per_era[i][0] > 1):
+      prompt_parts = [
+        "input: What is the vibe of these images (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of these images. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of these images. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key"
+      ]
+    
+      for j in range(pics_per_era[i][0]):
+        prompt_parts.append(*upload_if_needed(f"assets/{username}-era{i+1}[{j}].jpg"))
+      
+      prompt_parts.append("")
+      prompt_parts.append("output: ")
 
-json_obj = {"text": response}
+    else:
+      prompt_parts = [
+        "input: What is the vibe of this image (in lowercase), and list 5 songs (in appropriate caps) that match the vibe of this image. try not to repeat artists, but if they do they should repeat at most once. Use gen-z language when describing the vibe. List 8 words (in lowercase) that describe the vibe of the image. The generated file should have a vibe key, a songs key which then contains the title and artist of every song, and a words key"
+      ]
 
-with open('song_list.txt', 'w') as file:
-    # Write the content to the file
-    file.write(response)
+      prompt_parts.append(*upload_if_needed(f"assets/{username}-era{i+1}[0].jpg"))
+      prompt_parts.append("")
+      prompt_parts.append("output: ")
 
-with open("generated_content.json", "w") as json_file:
- json.dump(json_obj, json_file, indent=4)
-print(response)
+    response = model.generate_content(prompt_parts).text
 
-print("Generating your playlist...")
-make_playlist("song_list.txt")
+    json_obj = {"text": response}
 
-for uploaded_file in uploaded_files:
-  genai.delete_file(name=uploaded_file.name)
+    f = open("song_list.txt", "w")
+    f.write(response)
+    f.close()
+
+    make_playlist("song_list.txt", pics_per_era[i][1])
+
+
+    for uploaded_file in uploaded_files:
+      genai.delete_file(name=uploaded_file.name)
+    uploaded_files.clear()
+  print("playlists created")
