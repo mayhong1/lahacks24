@@ -1,3 +1,4 @@
+#lahacks24.py
 """Welcome to Reflex! This file outlines the steps to create a basic app."""
 
 from rxconfig import config
@@ -15,6 +16,9 @@ class State(rx.State):
         self.form_data = form_data
         print(form_data['prompt_text'])
         username_to_eras_playlist(form_data['prompt_text'])
+    def handle_login(self, form_data: dict):
+            # For now, just print the form data to the console
+            print(form_data)
 
 
 @rx.page(route="/")
@@ -141,6 +145,46 @@ def eras_page() -> rx.Component:
 
     )
 
+
+@rx.page(route="/login")
+def login_page() -> rx.Component:
+    # Create a centered box to hold the form
+    return rx.center(
+        rx.box(
+            # Stack elements vertically: heading, form, and button
+            rx.heading("Login", size="4", style={"margin-bottom": "10px"}),
+            rx.form(
+                rx.vstack(
+                    # Input for username
+                    rx.input(id="username", placeholder="Username", size="3"),
+                    # Input for password
+                    rx.input(id="password", placeholder="Password", type="password", size="3"),
+                    # Submit button
+                    rx.button("Login", type="submit", size="3")
+                ),
+                # Define what happens on form submission
+                on_submit=State.handle_login,
+                # Set the width of the form
+                width="100%"
+            ),
+            # Style the box
+            bg="white",
+            padding="2em",
+            align="center",
+            # Set the width of the box
+            width="25em"
+        ),
+        # Style the background of the center component
+        background="linear-gradient(120deg, #a6c0fe 0%, #f68084 100%)",
+        # Set the full height of the viewport
+        height="100vh",
+        # Set the full width of the viewport
+        width="100%"
+    )
+
+
+
 app = rx.App()
 app.add_page(index)
 app.add_page(eras_page)
+app.add_page(login_page, route="/login")  

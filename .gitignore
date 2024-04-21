@@ -7,8 +7,7 @@
 __pycache__/
 assets/*.jpg
 generated_content.json
-song_list.txttestimage.jpg
-.env
-testimage.jpg
-song_list.txt
 old/
+song_list.txt
+song_list.txttestimage.jpg
+testimage.jpg

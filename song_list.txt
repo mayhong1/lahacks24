@@ -1,38 +1,37 @@
 [
   {
-    "vibe": "lowkey chaotic, but like, in a good way",
+    "vibe": "soft and romantic",
     "songs": [
       {
-        "title": "HUMBLE.",
-        "artist": "Kendrick Lamar"
+        "title": "Until I Found You",
+        "artist": "Stephen Sanchez"
       },
       {
-        "title": "INDUSTRY BABY",
-        "artist": "Lil Nas X"
+        "title": "Dandelions",
+        "artist": "Ruth B"
       },
       {
-        "title": "POWER",
-        "artist": "Kanye West"
+        "title": "The Best Part",
+        "artist": "Daniel Caesar ft H.E.R"
       },
       {
-        "title": "Stronger",
-        "artist": "Kanye West"
+        "title": "Can't Help Falling In Love",
+        "artist": "Elvis Presley"
       },
       {
-        "title": "DNA.",
-        "artist": "Kendrick Lamar"
+        "title": "Location",
+        "artist": "Khalid"
       }
     ],
     "words": [
-      "powerful",
-      "confident",
-      "playful",
-      "energetic",
-      "chaotic",
-      "fun",
-      "childish",
-      "silly"
+      "love",
+      "cute",
+      "couple",
+      "goals",
+      "happy",
+      "relationship",
+      "bliss",
+      "sweet"
     ]
   }
 ]
-
