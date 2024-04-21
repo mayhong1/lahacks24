@@ -1,37 +1,37 @@
 [
   {
-    "vibe": "indie sleaze but make it 2023",
+    "vibe": "indie sleaze",
     "songs": [
       {
         "title": "Ribs",
         "artist": "Lorde"
       },
       {
-        "title": "Francis Forever",
-        "artist": "Mitski"
-      },
-      {
         "title": "505",
         "artist": "Arctic Monkeys"
       },
       {
-        "title": "Video Games",
-        "artist": "Lana Del Rey"
+        "title": "Ivy",
+        "artist": "Frank Ocean"
       },
       {
-        "title": "Buzzcut Season",
+        "title": "Are You Bored Yet?",
+        "artist": "Wallows"
+      },
+      {
+        "title": "Liability",
         "artist": "Lorde"
       }
     ],
     "words": [
-      "nostalgia",
-      "city",
+      "nostalgic",
       "grunge",
-      "nightlife",
-      "indie",
       "dark",
-      "edgy",
-      "cool"
+      "city",
+      "nightlife",
+      "underground",
+      "youth",
+      "angst"
     ]
   }
 ]

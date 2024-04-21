@@ -3,20 +3,20 @@
     "vibe": "y2k but make it dark academia",
     "songs": [
       {
-        "title": "Haunted",
-        "artist": "Laura Les"
+        "title": "Ribs",
+        "artist": "Lorde"
       },
       {
-        "title": "5:32",
-        "artist": "The Neighbourhood"
+        "title": "Buzzcut Season",
+        "artist": "Lorde"
       },
       {
         "title": "Francis Forever",
         "artist": "Mitski"
       },
       {
-        "title": "Ribs",
-        "artist": "Lorde"
+        "title": "505",
+        "artist": "Arctic Monkeys"
       },
       {
         "title": "Sweater Weather",
@@ -24,15 +24,14 @@
       }
     ],
     "words": [
-      "night",
-      "city",
       "grunge",
+      "city",
       "edgy",
-      "confident",
-      "cool",
-      "alone",
-      "sensual"
+      "night",
+      "alt",
+      "indie",
+      "dark",
+      "cool"
     ]
   }
 ]
-

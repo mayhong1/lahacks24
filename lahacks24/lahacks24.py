@@ -36,15 +36,12 @@ class State(rx.State):
     username=""
     playlist_processing = False
     playlist_loaded = False
-    data1 = ""
-    data2 = ""
-    data3 = ""
     
     def generate_playlist(self, form_data: dict):
         self.form_data = form_data
         self.playlist_loaded = False
         self.playlist_processing = True
-
+        yield
         self.username=form_data['prompt_text']
         print(form_data['prompt_text'])
         username_to_eras_playlist(form_data['prompt_text'])
@@ -89,7 +86,7 @@ def index() -> rx.Component:
         ),
         width="100%",
         height="100vh",
-        background="radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)",
+        background="radial-gradient(circle, rgba(174,208,238,1) 0%, rgba(233,148,213,1) 100%)",
     )
 
 @rx.page(route="/eras_page")
@@ -170,8 +167,8 @@ def eras_page() -> rx.Component:
             width="100%",
             height="100%",
         ),
-        background="radial-gradient(circle at 22% 11%,rgba(62, 180, 137,.20),hsla(0,0%,100%,0) 19%),radial-gradient(circle at 82% 25%,rgba(33,150,243,.18),hsla(0,0%,100%,0) 35%),radial-gradient(circle at 25% 61%,rgba(250, 128, 114, .28),hsla(0,0%,100%,0) 55%)",
-        height="100vh"
+        background="radial-gradient(circle, rgba(205,227,246,1) 1%, rgba(211,210,241,1) 25%, rgba(218,198,239,1) 45%, rgba(204,189,232,1) 61%, rgba(228,182,233,1) 80%, rgba(233,148,213,1) 100%)",
+        height="100%"
     )
 
 
