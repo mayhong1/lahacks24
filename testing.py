@@ -1,3 +1,0 @@
-from vibe_generator import username_to_eras_playlist
-
-username_to_eras_playlist("alicewang10t")

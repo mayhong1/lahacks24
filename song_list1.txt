@@ -1,37 +1,37 @@
 [
   {
-    "vibe": "main character but like lowkey",
+    "vibe": "main character moment but like lowkey sad",
     "songs": [
-      {
-        "title": "Golden",
-        "artist": "Harry Styles"
-      },
-      {
-        "title": "Super Rich Kids",
-        "artist": "Frank Ocean"
-      },
-      {
-        "title": "The Less I Know The Better",
-        "artist": "Tame Impala"
-      },
       {
         "title": "Ribs",
         "artist": "Lorde"
       },
       {
-        "title": "Are You Bored Yet?",
-        "artist": "Wallows"
+        "title": "SLOW DANCING IN THE DARK",
+        "artist": "Joji"
+      },
+      {
+        "title": "The Night Me And Your Mama Met",
+        "artist": "Childish Gambino"
+      },
+      {
+        "title": "SELF CONTROL",
+        "artist": "Frank Ocean"
+      },
+      {
+        "title": "Sweater Weather",
+        "artist": "The Neighbourhood"
       }
     ],
     "words": [
-      "golden",
-      "pensive",
-      "carefree",
-      "youthful",
+      "thoughtful",
       "nostalgic",
-      "contemplative",
-      "aesthetic",
-      "introspective"
+      "sentimental",
+      "reflective",
+      "wistful",
+      "melancholy",
+      "introspective",
+      "yearning"
     ]
   }
 ]

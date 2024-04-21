@@ -1,11 +1,7 @@
 [
   {
-    "vibe": "golden hour with bae, lowkey obsessed, main character",
+    "vibe": "soft and romantic",
     "songs": [
-      {
-        "title": "Golden Hour",
-        "artist": "JVKE"
-      },
       {
         "title": "Until I Found You",
         "artist": "Stephen Sanchez"
@@ -15,23 +11,27 @@
         "artist": "Ruth B."
       },
       {
-        "title": "Best Part",
-        "artist": "Daniel Caesar"
+        "title": "Sweater Weather",
+        "artist": "The Neighbourhood"
       },
       {
         "title": "Can't Help Falling In Love",
         "artist": "Elvis Presley"
+      },
+      {
+        "title": "Location",
+        "artist": "Khalid"
       }
     ],
     "words": [
-      "golden",
+      "couplegoals",
       "love",
-      "couple",
-      "city",
-      "romantic",
-      "affectionate",
-      "warm",
-      "happy"
+      "relationship",
+      "affection",
+      "cute",
+      "sweet",
+      "romance",
+      "togetherness"
     ]
   }
 ]
