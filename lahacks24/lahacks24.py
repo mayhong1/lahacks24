@@ -3,7 +3,7 @@ from rxconfig import config
 import reflex as rx
 from vibe_generator import username_to_eras_playlist
 from typing import Optional
-from reflex import page, box, heading
+# from reflex import page, box, heading, Container
 import json
 from typing import List, Dict
 
@@ -264,7 +264,7 @@ def eras_page() -> rx.Component:
 
 @rx.page(route="log_out")
 def log_out() -> rx.Component:
-    return Container(
+    return rx.container(
         rx.heading("You have been logged out", size="5", align="center", style={"paddingBottom": "3%", "paddingTop": "2%"}),
         rx.text("Thank you for using RetroTune!", align="center", style={"paddingBottom": "2%"}),
         rx.button(
