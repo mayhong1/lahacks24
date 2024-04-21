@@ -1,0 +1,37 @@
+[
+  {
+    "vibe": "soft and romantic",
+    "songs": [
+      {
+        "title": "Until I Found You",
+        "artist": "Stephen Sanchez"
+      },
+      {
+        "title": "Dandelions",
+        "artist": "Ruth B."
+      },
+      {
+        "title": "Sweater Weather",
+        "artist": "The Neighbourhood"
+      },
+      {
+        "title": "Can't Help Falling In Love",
+        "artist": "Elvis Presley"
+      },
+      {
+        "title": "Location",
+        "artist": "Khalid"
+      }
+    ],
+    "words": [
+      "couplegoals",
+      "love",
+      "relationship",
+      "affection",
+      "cute",
+      "sweet",
+      "romance",
+      "togetherness"
+    ]
+  }
+]
