@@ -84,11 +84,12 @@ def username_to_eras_playlist(username):
 
     json_obj = {"text": response}
 
-    with open('song_list.txt', 'w') as file:
-      # Write the content to the file
-      file.write(response)
+    f = open("song_list.txt", "w")
+    f.write(response)
+    f.close()
 
     make_playlist("song_list.txt", pics_per_era[i][1])
+
 
     for uploaded_file in uploaded_files:
       genai.delete_file(name=uploaded_file.name)

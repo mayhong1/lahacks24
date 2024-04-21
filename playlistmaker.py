@@ -6,27 +6,28 @@ import os
 import datetime
 
 month_dict = {
-    1  : "January",
-    2  : "Februrary",
-    3  : "March",
-    4  : "April",
-    5  : "May",
-    6  : "June",
-    7  : "July",
-    8  : "August",
-    9  : "September",
-    10 : "October",
-    11 : "November",
-    12 : "December"
+    1  : "january",
+    2  : "februrary",
+    3  : "march",
+    4  : "april",
+    5  : "may",
+    6  : "june",
+    7  : "july",
+    8  : "august",
+    9  : "september",
+    10 : "october",
+    11 : "november",
+    12 : "december"
 }
 
 load_dotenv()
 
 # Load the JSON file
 def make_playlist(file_path, era_date:datetime):
-    with open(file_path, 'r') as file:
-        # Load the JSON data from the file into a Python object
-        data = json.load(file)
+
+    f = open(file_path, "r")
+    data = json.load(f)
+    f.close()
 
     # Extract the songs from the JSON data
     songs = data[0]['songs']
@@ -40,7 +41,7 @@ def make_playlist(file_path, era_date:datetime):
     # Create a new playlist
     playlist = sp.user_playlist_create(sp.me()['id'], f"{data[0]['vibe']} era", public=False)
     playlist_id = playlist['id']
-    playlist_description = f'Your {month_dict[era_date.month]} {era_date.year} vibe: '
+    playlist_description = f'your {month_dict[era_date.month]} {era_date.year} vibe: '
     words = data[0]['words']
 
     for i in range(len(words)-1):
