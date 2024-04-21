@@ -3,35 +3,35 @@
     "vibe": "indie/bedroom pop",
     "songs": [
       {
+        "title": "Sweater Weather",
+        "artist": "The Neighbourhood"
+      },
+      {
         "title": "Ribs",
         "artist": "Lorde"
       },
       {
-        "title": "Motion Sickness",
-        "artist": "Phoebe Bridgers"
+        "title": "Sofia",
+        "artist": "Clairo"
       },
       {
-        "title": "we fell in love in october",
-        "artist": "girl in red"
+        "title": "Pluto Projector",
+        "artist": "Rex Orange County"
       },
       {
-        "title": "Are You Bored Yet?",
-        "artist": "Wallows"
-      },
-      {
-        "title": "Sweater Weather",
-        "artist": "The Neighbourhood"
+        "title": "Buzzcut Season",
+        "artist": "Lorde"
       }
     ],
     "words": [
-      "serene",
-      "calm",
       "carefree",
-      "beautiful",
-      "peaceful",
+      "youthful",
       "nostalgic",
       "dreamy",
-      "ethereal"
+      "summery",
+      "bright",
+      "natural",
+      "aesthetic"
     ]
   }
 ]

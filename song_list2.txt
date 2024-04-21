@@ -1,37 +1,37 @@
 [
   {
-    "vibe": "indie sleaze",
+    "vibe": "regencycore but make it dark academia",
     "songs": [
+      {
+        "title": "Would've, Could've, Should've",
+        "artist": "Taylor Swift"
+      },
       {
         "title": "Ribs",
         "artist": "Lorde"
       },
       {
-        "title": "505",
-        "artist": "Arctic Monkeys"
-      },
-      {
-        "title": "Ivy",
-        "artist": "Frank Ocean"
-      },
-      {
-        "title": "Are You Bored Yet?",
-        "artist": "Wallows"
+        "title": "Motion Sickness",
+        "artist": "Phoebe Bridgers"
       },
       {
         "title": "Liability",
         "artist": "Lorde"
+      },
+      {
+        "title": "The Night Me and Your Mama Met",
+        "artist": "Childish Gambino"
       }
     ],
     "words": [
-      "nostalgic",
-      "grunge",
+      "moody",
+      "romantic",
+      "elegant",
+      "sophisticated",
       "dark",
-      "city",
-      "nightlife",
-      "underground",
-      "youth",
-      "angst"
+      "mysterious",
+      "poetic",
+      "vintage"
     ]
   }
 ]

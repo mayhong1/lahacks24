@@ -1,37 +1,37 @@
 [
-  {
-    "vibe": "y2k but make it dark academia",
-    "songs": [
-      {
-        "title": "Ribs",
-        "artist": "Lorde"
-      },
-      {
-        "title": "Buzzcut Season",
-        "artist": "Lorde"
-      },
-      {
-        "title": "Francis Forever",
-        "artist": "Mitski"
-      },
-      {
-        "title": "505",
-        "artist": "Arctic Monkeys"
-      },
-      {
-        "title": "Sweater Weather",
-        "artist": "The Neighbourhood"
-      }
-    ],
-    "words": [
-      "grunge",
-      "city",
-      "edgy",
-      "night",
-      "alt",
-      "indie",
-      "dark",
-      "cool"
-    ]
-  }
+{
+"vibe": "post-workout gym sesh",
+"songs": [
+{
+"title": "POWER",
+"artist": "Kanye West"
+},
+{
+"title": "INDUSTRY BABY",
+"artist": "Lil Nas X"
+},
+{
+"title": "HUMBLE.",
+"artist": "Kendrick Lamar"
+},
+{
+"title": "Stronger",
+"artist": "Britney Spears"
+},
+{
+"title": "Can't Hold Us (feat. Ray Dalton)",
+"artist": "Macklemore & Ryan Lewis"
+}
+],
+"words": [
+"chocolate",
+"protein",
+"gains",
+"gym",
+"swole",
+"energy",
+"power",
+"gains"
+]
+}
 ]
