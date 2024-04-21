@@ -41,7 +41,7 @@ def make_playlist(file_path, era_date:datetime):
                                                 scope="playlist-modify-private"))
 
     # Create a new playlist
-    playlist = sp.user_playlist_create(sp.me()["id"], f"{data[0]["vibe"]} era", public=False)
+    playlist = sp.user_playlist_create(sp.me()["id"], f"{data[0]['vibe']} era", public=False)
     playlist_id = playlist["id"]
 
     # Create playlist description 
